@@ -1,7 +1,7 @@
 import './style.css'
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div class="bg-cover bg-no-repeat bg-[url('./images/background.svg')] grid grid-cols-8 grid-rows-8 gap-4 p-10 h-screen">
+  <div class="bg-cover bg-no-repeat bg-[url('/images/background.svg')] grid grid-cols-8 grid-rows-8 gap-4 p-10 h-screen">
     <div class="col-span-2 row-span-2 bg-white/80 backdrop-blur-lg shadow rounded-lg p-4">
       <h2 class='text-lg font-semibold mb-2'>Hobbies</h2>
       <p>Scouts, Online gaming, Microelectronics, Programming</p>
