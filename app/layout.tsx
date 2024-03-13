@@ -1,8 +1,15 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const madimi = localFont({
+  src: [
+    {
+      path: '../public/fonts/MadimiOne-Regular.ttf',
+      weight: '400',
+    },
+  ]
+});
 
 export const metadata: Metadata = {
   title: "Lucas William Bateson",
@@ -16,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={madimi.className}>{children}</body>
     </html>
   );
 }
