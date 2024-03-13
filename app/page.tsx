@@ -21,8 +21,8 @@ export default function Home() {
       <div className="container intro">
         <div className="intro-content">
           <div className="intro-text text-lg text-center">
-            <h1>Hi 👋🏻, I'm a 17-year-old student studying Computer Science.</h1>
-            <br/>
+            <h1>Hi 👋🏻, I am a 17-year-old student studying Computer Science.</h1>
+            <br />
             <p>I am studying at Fyrstikkallen Vgs in Oslo. I am a dual british🇬🇧/norwegian🇳🇴 national, although I am born and raised in Oslo.</p>
           </div>
           <div className="profile-image">
