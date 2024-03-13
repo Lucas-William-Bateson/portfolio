@@ -22,7 +22,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 
     <div class="col-start-3 col-span-4 row-span-4 bg-white/80 backdrop-blur-lg shadow rounded-lg p-4 flex items-center justify-center">
       <div class="flex-1 min-w-0">
-        <h1 class="text-xl font-bold mb-2">Hi 👋🏻, I'm a 17-year-old student studying Computer Science.</h1>
+        <h1 class="text-xl font-bold mb-2">Hi 👋🏻, I'm Lucas, a 17-year-old student studying Computer Science.</h1>
         <p>I study at Fyrstikkallen Vgs in Oslo. I'm a dual British🇬🇧/Norwegian🇳🇴 national, born and raised in Oslo.</p>
       </div>
       <div class="flex-1 ">
