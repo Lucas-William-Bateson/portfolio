@@ -26,7 +26,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         <p>I study at Fyrstikkallen Vgs in Oslo. I'm a dual British🇬🇧/Norwegian🇳🇴 national, born and raised in Oslo.</p>
       </div>
       <div class="flex-1 ">
-        <Image src="/images/avatar.png" width={100} height={100} alt="Profile Picture" class="size-9/12 self-auto justify-self-center" />
+        <img src="/images/avatar.png" alt="Profile Picture" class="size-9/12 self-auto justify-self-center" />
       </div>
     </div>
 
