@@ -4,7 +4,7 @@ import './App.css';
 function App() {
   return (
     <div
-      className="grid md:grid-cols-8 md:grid-rows-8 gap-4 p-4 md:p-10 h-screen">
+      className="bg-cover bg-scroll bg-no-repeat bg-[url('/images/background.png')] grid md:grid-cols-8 md:grid-rows-8 gap-4 p-4 md:p-10 h-screen">
       <div
         className="order-2 p-8 rounded-lg shadow md:order-1 md:col-span-2 md:row-span-2 bg-white/80 backdrop-blur-lg shadow-over">
         <h2 className='mb-2 text-lg font-semibold'>Hobbies</h2>
