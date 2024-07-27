@@ -1,151 +1,28 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+    <title>Lucas William Bateson</title>
+    <link rel="manifest" href="/manifest.json" />
+    <script type="module" src="/src/index.tsx"></script>
+    <title>React App</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
 
-<head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Madimi+One&display=swap" rel="stylesheet">
-  <title>Lucas William Bateson</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
 
-<body>
-  <div id="app">
-    <div
-      class="bg-cover bg-no-repeat bg-[url('/images/background.svg')] grid md:grid-cols-8 md:grid-rows-8 gap-4 p-4 md:p-10 h-screen">
-
-      <div
-        class="order-2 p-8 rounded-lg shadow md:order-1 md:col-span-2 md:row-span-2 bg-white/80 backdrop-blur-lg shadow-over">
-        <h2 class='mb-2 text-lg font-semibold'>Hobbies</h2>
-        <p>Scouts, Online gaming, Microelectronics, Programming</p>
-      </div>
-
-      <div
-        class="order-3 p-8 rounded-lg shadow md:order-2 md:col-span-2 md:row-span-2 md:row-start-3 bg-white/80 backdrop-blur-lg shadow-over">
-        <h2 class='mb-2 text-lg font-semibold'>Languages</h2>
-        <p>🇬🇧 English – Native</p>
-        <p>🇳🇴 Norwegian – Native</p>
-        <p>🇩🇪 German – Beginner</p>
-      </div>
-
-      <div
-        class="order-4 p-8 rounded-lg shadow md:order-3 md:col-span-2 md:row-span-4 md:row-start-5 bg-white/80 backdrop-blur-lg shadow-over">
-        <h2 class='mb-2 text-lg font-semibold'>Platforms</h2>
-        <p>Github: Lucas8448</p>
-        <p>LinkedIn: Lucas Bateson</p>
-      </div>
-
-      <div
-        class="flex flex-col items-center justify-center order-1 p-8 rounded-lg shadow md:order-4 md:flex-row md:col-span-4 md:col-start-3 md:row-span-4 bg-white/80 backdrop-blur-lg shadow-over">
-        <div class="px-4 mb-4 text-center md:text-left md:mb-0 md:flex-auto">
-          <h1 class="mb-2 text-xl font-bold">Hi 👋🏻, I'm Lucas, a 17-year-old student studying Computer Science.</h1>
-          <p>I study at Fyrstikkallen Vgs in Oslo. I'm a dual British🇬🇧/Norwegian🇳🇴 national, born and raised in
-            Oslo.</p>
-        </div>
-        <div class="flex justify-center px-4 md:flex-auto md:justify-start">
-          <img src="/images/avatar.png" alt="Profile Picture" class="w-3/4" />
-        </div>
-      </div>
-
-      <div
-        class="order-5 p-8 rounded-lg shadow md:order-5 md:col-span-2 md:col-start-3 md:row-span-4 md:row-start-5 bg-white/80 backdrop-blur-lg shadow-over">
-        <h2 class='mb-2 text-lg font-semibold'>Skills</h2>
-        <p>Backend with Python Flask</p>
-        <p>Vue.js/React</p>
-        <p>Next.js/Nuxt.js</p>
-        <p>TailwindCSS</p>
-        <p>HTML, CSS, JavaScript</p>
-        <p>Scylla/Sqlite3</p>
-        <p>Git</p>
-      </div>
-
-      <div
-        class="order-6 p-4 overflow-auto rounded-lg shadow md:order-6 md:max-h-screen md:col-span-2 md:col-start-7 md:row-start-1 md:row-span-8 bg-white/80 backdrop-blur-lg shadow-over">
-        <h2 class='p-4 mb-2 text-lg font-semibold'>Grades (1-lowest, 6-highest)</h2>
-        <table class="min-w-full divide-y divide-gray-200">
-          <thead class="bg-gray-50">
-            <tr>
-              <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                Subject
-              </th>
-              <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                Grade
-              </th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-gray-200">
-            <tr>
-              <td class="px-6 py-4">Matematikk</td>
-              <td class="px-6 py-4">6</td>
-            </tr>
-            <tr>
-              <td class="px-6 py-4">Naturfag</td>
-              <td class="px-6 py-4">6</td>
-            </tr>
-            <tr>
-              <td class="px-6 py-4">Produksjon</td>
-              <td class="px-6 py-4">6</td>
-            </tr>
-            <tr>
-              <td class="px-6 py-4">Teknologiforståelse</td>
-              <td class="px-6 py-4">6</td>
-            </tr>
-            <tr>
-              <td class="px-6 py-4">Programmering</td>
-              <td class="px-6 py-4">6</td>
-            </tr>
-            <tr>
-              <td class="px-6 py-4">Yrkesfaglig fordypning vg1</td>
-              <td class="px-6 py-4">6</td>
-            </tr>
-            <tr>
-              <td class="px-6 py-4">Engelsk</td>
-              <td class="px-6 py-4">5</td>
-            </tr>
-            <tr>
-              <td class="px-6 py-4">Driftstøtte</td>
-              <td class="px-6 py-4">6</td>
-            </tr>
-            <tr>
-              <td class="px-6 py-4">Utvikling</td>
-              <td class="px-6 py-4">6</td>
-            </tr>
-            <tr>
-              <td class="px-6 py-4">Yrkesfaglig fordypning vg2</td>
-              <td class="px-6 py-4">6</td>
-            </tr>
-            <tr>
-              <td class="px-6 py-4">Brukerstøtte</td>
-              <td class="px-6 py-4">6</td>
-            </tr>
-            <tr>
-              <td class="px-6 py-4">Norsk</td>
-              <td class="px-6 py-4">5</td>
-            </tr>
-            <tr>
-              <td class="px-6 py-4">Samfunnskunnskap</td>
-              <td class="px-6 py-4">6</td>
-            </tr>
-            <tr>
-              <td class="px-6 py-4">Kroppsøving</td>
-              <td class="px-6 py-4">6</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div
-        class="order-7 p-8 rounded-lg shadow md:order-7 md:col-span-2 md:col-start-5 md:row-span-4 md:row-start-5 bg-white/80 backdrop-blur-lg shadow-over">
-        <h2 class='mb-2 text-lg font-semibold'>Experience</h2>
-        <p>Programming teacher Aug 2020 – Jun 2021, Oslo commune, Oslo</p>
-        <p>Scout Leader Aug 2018 – present, Oslo</p>
-      </div>
-    </div>
-  </div>
-  <script type="module" src="/src/main.ts"></script>
-</body>
-
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+  </body>
 </html>
