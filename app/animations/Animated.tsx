@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, ReactElement, Children, FC, ReactNode } from "react";
 import { useAnimation, motion, Variants, Transition } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { IconType } from "react-icons";
@@ -8,7 +8,7 @@ type AnimatedProps = {
     delay?: number;
     stepSize?: number;
     iconSize?: number;
-    children: React.ReactNode;
+    children: ReactNode;
 };
 
 const animatedVariants: Variants = {
@@ -22,7 +22,7 @@ const animatedVariants: Variants = {
     },
 };
 
-const Animated: React.FC<AnimatedProps> = ({
+const Animated: FC<AnimatedProps> = ({
     className,
     delay,
     stepSize = 0.1,
@@ -58,9 +58,8 @@ const Animated: React.FC<AnimatedProps> = ({
             variants={animatedVariants}
             transition={transition}
         >
-            {React.Children.map(children, (child, index) => {
-                // Cast the child to an IconType to access the IconType properties
-                const icon = child as React.ReactElement<IconType>;
+            {Children.map(children, (child, index) => {
+                const icon = child as ReactElement<IconType>;
                 return (
                     <motion.div
                         key={index}

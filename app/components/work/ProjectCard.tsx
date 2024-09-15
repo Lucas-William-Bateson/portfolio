@@ -64,8 +64,7 @@ const ProjectCard: React.FC<Partial<ProjectProps>> = ({
                                     data-blobity-radius="35"
                                     data-blobity-offset-x="4"
                                     data-blobity-offset-y="4"
-                                    data-blobity-magnetic="false"
-                                >
+                                    data-blobity-magnetic="false">
                                     <SiGithub />
                                 </Link>
                             )}
