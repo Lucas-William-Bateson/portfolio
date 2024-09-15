@@ -12,18 +12,18 @@ import {
 } from "react-icons/si";
 import { IconType } from "react-icons";
 
-export type ProjectProps = {
-    id: number;
-    name: string;
-    description: string;
-    technologies: IconType[];
-    techNames: string[];
-    techLinks: string[];
-    github: string;
-    demo: string;
-    image: string;
-    available: boolean;
-};
+export interface ProjectProps {
+    id?: number;
+    name?: string;
+    description?: string;
+    technologies?: IconType[];
+    techNames?: string[];
+    techLinks?: string[];
+    github?: string;
+    demo?: string;
+    image?: string;
+    available?: boolean;
+}
 
 export const projects = [
     {

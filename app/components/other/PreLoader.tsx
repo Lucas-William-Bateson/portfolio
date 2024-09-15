@@ -98,7 +98,7 @@ const PreLoader: React.FC = () => {
                 <span>Software Developer</span>
                 <span> / </span>
 
-                <span className="flex items-center justify-center gap-3"> Working at  <Logo width={50} height={50} /> Nav IT</span>
+                <span className="flex items-center justify-center gap-3"> Developing at  <Logo width={50} height={50} /> Nav IT</span>
                 <div className="sub hidden"></div>
             </div>
         </div>
