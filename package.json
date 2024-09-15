@@ -4,13 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "NODE_ENV=production next build",
-    "build:dev": "NODE_ENV=production BRANCH=dev next build",
+    "build": "next build",
     "start": "next start",
-    "export": "next export",
-    "lint": "next lint",
-    "lint:fix": "eslint --fix --ext ts,tsx app/ && prettier --write app/",
-    "type-check": "tsc"
+    "lint": "next lint"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
