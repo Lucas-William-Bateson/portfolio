@@ -16,9 +16,9 @@ export function About() {
         >
           <div>
             <h2 className="text-[32px] font-semibold leading-tight mb-6">
-              Dual Citizen.<br />
               Full Stack Developer.<br />
-              Tech Enthusiast.
+              Tech Enthusiast.<br />
+              Bilingual.
             </h2>
             <div className="space-y-4 text-[#86868b]">
               <p>
