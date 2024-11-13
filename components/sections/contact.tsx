@@ -18,9 +18,6 @@ export function Contact() {
           <h2 className="text-[32px] font-semibold">
             Let's Connect
           </h2>
-          <p className="text-[#86868b] max-w-[600px] mx-auto">
-            Have a project in mind? Let's create something exceptional together.
-          </p>
         </motion.div>
 
         <motion.div
