@@ -14,7 +14,7 @@ export function Experience() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-[32px] font-semibold">Experience</h2>
+          <h2 className="text-[32px] font-semibold text-white">Experience</h2>
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-6">
@@ -25,15 +25,15 @@ export function Experience() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: index * 0.2 }}
               viewport={{ once: true }}
-              className="product-card rounded-2xl p-8 hover:scale-[1.02] transition-transform"
+              className="glass-card rounded-2xl p-8 hover-neomorphic"
             >
               <div className="flex justify-between items-start mb-6">
                 <div>
-                  <h3 className="text-xl font-semibold">{exp.title}</h3>
-                  <p className="text-[#86868b]">{exp.company}</p>
+                  <h3 className="text-xl font-semibold text-white">{exp.title}</h3>
+                  <p className="text-zinc-400">{exp.company}</p>
                 </div>
               </div>
-              <p className="text-[#86868b]">{exp.description}</p>
+              <p className="text-zinc-400">{exp.description}</p>
             </motion.div>
           ))}
         </div>

@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export function Contact() {
   return (
-    <section id="contact" className="py-20 bg-[#f5f5f7]">
+    <section id="contact" className="py-20">
       <div className="max-w-[980px] mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -15,7 +15,7 @@ export function Contact() {
           viewport={{ once: true }}
           className="text-center space-y-4"
         >
-          <h2 className="text-[32px] font-semibold">
+          <h2 className="text-[32px] font-semibold text-white">
             Let's Connect
           </h2>
         </motion.div>
@@ -33,14 +33,14 @@ export function Contact() {
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="product-card rounded-2xl p-8 hover:scale-[1.02] transition-transform"
+              className="neomorphic-card rounded-2xl p-8 hover-neomorphic"
             >
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-3">
                   {link.icon}
-                  <span className="font-semibold">{link.label}</span>
+                  <span className="font-semibold text-white">{link.label}</span>
                 </div>
-                <ChevronRight className="h-5 w-5 text-[#86868b]" />
+                <ChevronRight className="h-5 w-5 text-zinc-400" />
               </div>
             </Link>
           ))}

@@ -4,16 +4,18 @@ import { Experience } from "@/components/sections/experience";
 import { Projects } from "@/components/sections/projects";
 import { Contact } from "@/components/sections/contact";
 import { Navigation } from "@/components/navigation";
+import { Credits } from "@/components/credits";
 
 export default function Home() {
   return (
-    <main className="relative">
+    <main className="relative min-h-screen bg-main bg-fixed bg-cover bg-center">
       <Navigation />
       <Hero />
       <About />
       <Experience />
       <Projects />
       <Contact />
+      <Credits />
     </main>
   );
 }

@@ -8,37 +8,37 @@ export function Navigation() {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className="fixed top-0 left-0 right-0 z-50 nav-blur border-b border-[#d2d2d7]"
+      className="fixed top-0 left-0 right-0 z-50 nav-blur border-b border-zinc-800"
     >
       <div className="max-w-[980px] mx-auto h-12 flex items-center justify-between px-4">
         <Link 
           href="/"
-          className="text-sm font-semibold text-[#1d1d1f] hover:opacity-80 transition-opacity"
+          className="text-sm font-semibold text-white hover:text-zinc-300 transition-colors"
         >
           Lucas Bateson
         </Link>
         <div className="flex items-center gap-8">
           <Link 
             href="#about"
-            className="text-sm text-[#1d1d1f] hover:opacity-80 transition-opacity"
+            className="text-sm text-zinc-300 hover:text-white transition-colors"
           >
             About
           </Link>
           <Link 
             href="#experience"
-            className="text-sm text-[#1d1d1f] hover:opacity-80 transition-opacity"
+            className="text-sm text-zinc-300 hover:text-white transition-colors"
           >
             Experience
           </Link>
           <Link 
             href="#projects"
-            className="text-sm text-[#1d1d1f] hover:opacity-80 transition-opacity"
+            className="text-sm text-zinc-300 hover:text-white transition-colors"
           >
             Projects
           </Link>
           <Link 
             href="#contact"
-            className="text-sm text-[#1d1d1f] hover:opacity-80 transition-opacity"
+            className="text-sm text-zinc-300 hover:text-white transition-colors"
           >
             Contact
           </Link>
