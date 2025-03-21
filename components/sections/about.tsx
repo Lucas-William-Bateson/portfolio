@@ -24,7 +24,7 @@ export function About() {
               Currently developing software at Nav IT as a Full Stack Developer, and learning new technologies every day.
             </p>
             <p>
-              I have a passion for building things, and I love to create software that is both functional and beautiful.
+              I have a passion for building things, and I love to create software that is both functional, idiomatic and beautiful.
             </p>
           </div>
         </motion.div>
