@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  portfolio:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: portfolio
+    ports:
+      - "80:80"
+    restart: unless-stopped
+    # If you need environment variables
+    # environment:
+    #   - NODE_ENV=production
+    # For persistent volumes if needed
+    # volumes:
+    #   - ./data:/app/data
+    networks:
+      - portfolio_network
+
+networks:
+  portfolio_network:
+    driver: bridge 
