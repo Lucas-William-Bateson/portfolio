@@ -3,10 +3,49 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
+import { useEffect, useRef } from "react";
+import { useTrackSection } from "@/lib/hooks/useTrackSection";
+import { useTrackElement } from "@/lib/hooks/useTrackElement";
 
 export function Hero() {
+  const sectionRef = useTrackSection({
+    sectionName: "Hero",
+    additionalData: { isFirstSection: true }
+  });
+
+  const skillsRef = useRef<(HTMLDivElement | null)[]>([]);
+
+  // Set up tracking for individual skill cards
+  useEffect(() => {
+    skillsRef.current.forEach((ref, index) => {
+      if (!ref) return;
+
+      const skill = skills[index];
+      const skillObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting && typeof window !== 'undefined' && window.umami) {
+              window.umami.track('Skill card viewed', {
+                skill: skill.name,
+                position: String(index)
+              });
+              skillObserver.disconnect();
+            }
+          });
+        },
+        { threshold: 0.7 }
+      );
+
+      skillObserver.observe(ref);
+    });
+
+    return () => {
+      // Cleanup will be handled by each observer's disconnect
+    };
+  }, []);
+
   return (
-    <section className="pt-32 pb-24">
+    <section ref={sectionRef} className="pt-32 pb-24">
       <div className="max-w-[980px] mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -21,7 +60,11 @@ export function Hero() {
             Developing at Nav IT
           </p>
           <div className="flex items-center justify-center gap-2 text-blue-400 hover:text-blue-300 transition-colors">
-            <Link href="#about" className="text-lg hover:underline">
+            <Link
+              href="#about"
+              className="text-lg hover:underline"
+              data-umami-event="Hero learn more click"
+            >
               Learn more
             </Link>
             <ChevronRight className="h-5 w-5" />
@@ -37,7 +80,10 @@ export function Hero() {
           {skills.map((skill, index) => (
             <div
               key={index}
+              ref={el => skillsRef.current[index] = el}
               className="neomorphic-card rounded-2xl p-6 text-center hover-neomorphic"
+              data-umami-event="Skill card view"
+              data-umami-event-skill={skill.name}
             >
               <div className="text-4xl mb-4">{skill.icon}</div>
               <h3 className="text-white font-semibold mb-2">{skill.name}</h3>

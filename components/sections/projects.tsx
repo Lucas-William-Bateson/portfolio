@@ -4,10 +4,53 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
+import { useEffect, useRef } from "react";
+import { useTrackSection } from "@/lib/hooks/useTrackSection";
+import { useTrackElement } from "@/lib/hooks/useTrackElement";
 
 export function Projects() {
+  const sectionRef = useTrackSection({
+    sectionName: "Projects",
+    additionalData: { isImportant: true }
+  });
+
+  const projectRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  // Set up tracking for individual projects
+  useEffect(() => {
+    projectRefs.current.forEach((ref, index) => {
+      if (!ref) return;
+
+      const project = projects[index];
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              // Track the project view event
+              if (typeof window !== 'undefined' && window.umami) {
+                window.umami.track('Project viewed', {
+                  project: project.title,
+                  hasLink: project.link ? 'true' : 'false'
+                });
+              }
+              // Disconnect after first view to prevent multiple events
+              observer.disconnect();
+            }
+          });
+        },
+        { threshold: 0.6 } // Higher threshold for projects - need more visible
+      );
+
+      observer.observe(ref);
+    });
+
+    return () => {
+      // Cleanup will be handled by each observer's disconnect
+    };
+  }, []);
+
   return (
-    <section id="projects" className="py-20">
+    <section id="projects" ref={sectionRef} className="py-20">
       <div className="max-w-[980px] mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -29,6 +72,7 @@ export function Projects() {
           {projects.map((project, index) => (
             <motion.div
               key={index}
+              ref={el => projectRefs.current[index] = el}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: index * 0.2 }}
@@ -40,6 +84,8 @@ export function Projects() {
                   href={project.link}
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-umami-event="Project click"
+                  data-umami-event-project={project.title}
                 >
                   <div className="glass-card rounded-2xl overflow-hidden hover-neomorphic">
                     <div className="relative h-[400px] w-full">
@@ -76,7 +122,12 @@ export function Projects() {
                   </div>
                 </Link>
               ) : (
-                <div className="product-card rounded-2xl overflow-hidden">
+                <div
+                  className="product-card rounded-2xl overflow-hidden"
+                  data-umami-event="Project view"
+                  data-umami-event-project={project.title}
+                  data-umami-event-has-link="false"
+                >
                   <div className="relative h-[400px] w-full">
                     <Image
                       src={project.image}

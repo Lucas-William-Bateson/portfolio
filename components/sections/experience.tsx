@@ -2,10 +2,16 @@
 
 import { motion } from "framer-motion";
 import { ChevronRight } from "lucide-react";
+import { useEffect, useRef } from "react";
+import { useTrackSection } from "@/lib/hooks/useTrackSection";
 
 export function Experience() {
+  const sectionRef = useTrackSection({
+    sectionName: "Experience"
+  });
+
   return (
-    <section id="experience" className="py-20">
+    <section id="experience" ref={sectionRef} className="py-20">
       <div className="max-w-[980px] mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -51,7 +57,7 @@ const experiences = [
   {
     "title": "Data Analyst",
     "company": "Visma Norway",
-    "description": "Conducted data analysis for Visma Norway’s InSchool service using Amazon QuickSight."
+    "description": "Conducted data analysis for Visma Norway's InSchool service using Amazon QuickSight."
   },
   {
     "title": "Student",

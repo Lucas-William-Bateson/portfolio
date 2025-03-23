@@ -35,17 +35,44 @@ const buttonVariants = cva(
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+  VariantProps<typeof buttonVariants> {
   asChild?: boolean;
+  /** Umami tracking event name */
+  umamiEvent?: string;
+  /** Additional Umami tracking event data as key-value pairs */
+  umamiEventData?: Record<string, string>;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
+  ({
+    className,
+    variant,
+    size,
+    asChild = false,
+    umamiEvent,
+    umamiEventData,
+    ...props
+  }, ref) => {
     const Comp = asChild ? Slot : 'button';
+
+    // Prepare Umami event tracking attributes
+    const umamiAttrs: Record<string, string> = {};
+    if (umamiEvent) {
+      umamiAttrs['data-umami-event'] = umamiEvent;
+
+      // Add any additional event data attributes
+      if (umamiEventData) {
+        Object.entries(umamiEventData).forEach(([key, value]) => {
+          umamiAttrs[`data-umami-event-${key}`] = value;
+        });
+      }
+    }
+
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
+        {...umamiAttrs}
         {...props}
       />
     );

@@ -3,10 +3,16 @@
 import { motion } from "framer-motion";
 import { Github, Linkedin, Mail, ChevronRight } from "lucide-react";
 import Link from "next/link";
+import { useEffect, useRef } from "react";
+import { useTrackSection } from "@/lib/hooks/useTrackSection";
 
 export function Contact() {
+  const sectionRef = useTrackSection({
+    sectionName: "Contact"
+  });
+
   return (
-    <section id="contact" className="py-20">
+    <section id="contact" ref={sectionRef} className="py-20">
       <div className="max-w-[980px] mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -34,6 +40,8 @@ export function Contact() {
               target="_blank"
               rel="noopener noreferrer"
               className="neomorphic-card rounded-2xl p-8 hover-neomorphic"
+              data-umami-event="Contact click"
+              data-umami-event-type={link.label}
             >
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-3">
