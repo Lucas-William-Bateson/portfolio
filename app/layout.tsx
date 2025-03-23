@@ -16,6 +16,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
+      <head>
+        <script defer src="https://telemetry.l3s.me/script.js" data-website-id="61df698f-abe7-40e6-a726-08ac9ad5b85d"></script>
+      </head>
       <body className={inter.className}>{children}</body>
     </html>
   );
