@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { trackEvent } from '../utils/analytics';
 
 interface UseTrackElementProps {
     /**
@@ -37,9 +38,7 @@ export function useTrackElement<T extends HTMLElement>({
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
                         // Track the view event when element becomes visible
-                        if (typeof window !== 'undefined' && window.umami) {
-                            window.umami.track(eventName, eventData);
-                        }
+                        trackEvent(eventName, eventData);
                         // Disconnect after first view to prevent multiple events
                         observer.disconnect();
                     }

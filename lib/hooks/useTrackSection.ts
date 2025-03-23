@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { trackEvent } from '../utils/analytics';
 
 interface UseTrackSectionProps {
     /**
@@ -36,13 +37,11 @@ export function useTrackSection({
             (entries) => {
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
-                        // Track the view event when section becomes visible
-                        if (typeof window !== 'undefined' && window.umami) {
-                            window.umami.track('Section viewed', {
-                                section: sectionName,
-                                ...additionalData
-                            });
-                        }
+                        // Track the view event when section becomes visible using our optimized function
+                        trackEvent('Section viewed', {
+                            section: sectionName,
+                            ...additionalData
+                        });
                         // Disconnect after first view to prevent multiple events
                         observer.disconnect();
                     }

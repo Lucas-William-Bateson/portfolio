@@ -7,6 +7,7 @@ import { ChevronRight } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { useTrackSection } from "@/lib/hooks/useTrackSection";
 import { useTrackElement } from "@/lib/hooks/useTrackElement";
+import { trackEvent } from "@/lib/utils/analytics";
 
 export function Projects() {
   const sectionRef = useTrackSection({
@@ -27,12 +28,10 @@ export function Projects() {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
               // Track the project view event
-              if (typeof window !== 'undefined' && window.umami) {
-                window.umami.track('Project viewed', {
-                  project: project.title,
-                  hasLink: project.link ? 'true' : 'false'
-                });
-              }
+              trackEvent('Project viewed', {
+                project: project.title,
+                hasLink: project.link ? 'true' : 'false'
+              });
               // Disconnect after first view to prevent multiple events
               observer.disconnect();
             }
@@ -86,6 +85,7 @@ export function Projects() {
                   rel="noopener noreferrer"
                   data-umami-event="Project click"
                   data-umami-event-project={project.title}
+                  onClick={() => trackEvent('Project click', { project: project.title })}
                 >
                   <div className="glass-card rounded-2xl overflow-hidden hover-neomorphic">
                     <div className="relative h-[400px] w-full">
@@ -93,6 +93,10 @@ export function Projects() {
                         src={project.image}
                         alt={project.title}
                         fill
+                        sizes="(max-width: 768px) 100vw, 980px"
+                        loading="lazy"
+                        placeholder="blur"
+                        blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFeAJShWBPCwAAAABJRU5ErkJggg=="
                         className="object-cover"
                       />
                     </div>
@@ -133,6 +137,10 @@ export function Projects() {
                       src={project.image}
                       alt={project.title}
                       fill
+                      sizes="(max-width: 768px) 100vw, 980px"
+                      loading="lazy"
+                      placeholder="blur"
+                      blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFeAJShWBPCwAAAABJRU5ErkJggg=="
                       className="object-cover"
                     />
                   </div>

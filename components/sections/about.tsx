@@ -11,7 +11,7 @@ export function About() {
   });
 
   return (
-    <section id="about" ref={sectionRef} className="py-20 bg-[#0b0b0f]/70">
+    <section id="about" ref={sectionRef} className="py-20">
       <div className="max-w-[980px] mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

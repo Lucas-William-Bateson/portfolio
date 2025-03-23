@@ -5,11 +5,19 @@ import { Github, Linkedin, Mail, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { useTrackSection } from "@/lib/hooks/useTrackSection";
+import { trackEvent } from "@/lib/utils/analytics";
 
 export function Contact() {
   const sectionRef = useTrackSection({
     sectionName: "Contact"
   });
+
+  const handleSocialClick = (platform: string) => {
+    trackEvent('Social link clicked', {
+      platform,
+      location: 'contact section'
+    });
+  };
 
   return (
     <section id="contact" ref={sectionRef} className="py-20">
@@ -42,6 +50,7 @@ export function Contact() {
               className="neomorphic-card rounded-2xl p-8 hover-neomorphic"
               data-umami-event="Contact click"
               data-umami-event-type={link.label}
+              onClick={() => handleSocialClick(link.label)}
             >
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-3">

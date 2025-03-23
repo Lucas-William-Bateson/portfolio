@@ -6,6 +6,7 @@ import { ChevronRight } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { useTrackSection } from "@/lib/hooks/useTrackSection";
 import { useTrackElement } from "@/lib/hooks/useTrackElement";
+import { trackEvent } from "@/lib/utils/analytics";
 
 export function Hero() {
   const sectionRef = useTrackSection({
@@ -24,8 +25,8 @@ export function Hero() {
       const skillObserver = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
-            if (entry.isIntersecting && typeof window !== 'undefined' && window.umami) {
-              window.umami.track('Skill card viewed', {
+            if (entry.isIntersecting) {
+              trackEvent('Skill card viewed', {
                 skill: skill.name,
                 position: String(index)
               });
@@ -44,13 +45,42 @@ export function Hero() {
     };
   }, []);
 
+  // Optimized animation variants
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const handleLearnMoreClick = () => {
+    trackEvent('Hero learn more click', {
+      destination: 'about section'
+    });
+  };
+
   return (
     <section ref={sectionRef} className="pt-32 pb-24">
       <div className="max-w-[980px] mx-auto px-4">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
+          initial="hidden"
+          animate="visible"
+          variants={fadeInUp}
           className="text-center space-y-12"
         >
           <h1 className="text-[40px] sm:text-[56px] font-bold leading-tight tracking-tight hero-text-gradient">
@@ -64,6 +94,7 @@ export function Hero() {
               href="#about"
               className="text-lg hover:underline"
               data-umami-event="Hero learn more click"
+              onClick={handleLearnMoreClick}
             >
               Learn more
             </Link>
@@ -72,15 +103,17 @@ export function Hero() {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 1, ease: "easeOut" }}
+          initial="hidden"
+          animate="visible"
+          variants={staggerContainer}
           className="mt-32 grid grid-cols-2 md:grid-cols-4 gap-8"
+          viewport={{ once: true }}
         >
           {skills.map((skill, index) => (
-            <div
+            <motion.div
               key={index}
               ref={el => skillsRef.current[index] = el}
+              variants={fadeInUp}
               className="neomorphic-card rounded-2xl p-6 text-center hover-neomorphic"
               data-umami-event="Skill card view"
               data-umami-event-skill={skill.name}
@@ -88,7 +121,7 @@ export function Hero() {
               <div className="text-4xl mb-4">{skill.icon}</div>
               <h3 className="text-white font-semibold mb-2">{skill.name}</h3>
               <p className="text-sm text-zinc-300">{skill.description}</p>
-            </div>
+            </motion.div>
           ))}
         </motion.div>
       </div>
