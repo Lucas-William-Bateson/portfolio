@@ -6,7 +6,6 @@ on:
 
 env:
   IMAGE_TAG: ${{ github.sha }}
-  PORT: 80
   NAME: portfolio
 
 jobs:
@@ -17,8 +16,8 @@ jobs:
 
       - name: Build & Push Image
         run: |
-          docker build -t localhost:${PORT}/${NAME}:${IMAGE_TAG} .
-          docker push localhost:${PORT}/${NAME}:${IMAGE_TAG}
+          docker build -t localhost:5001/${NAME}:${IMAGE_TAG} .
+          docker push localhost:5001/${NAME}:${IMAGE_TAG}
 
       - name: Deploy via Docker Compose
         run: |
