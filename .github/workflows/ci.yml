@@ -1,0 +1,25 @@
+name: CI & Deploy
+
+on:
+  push:
+    branches: [ main ]
+
+env:
+  IMAGE_TAG: ${{ github.sha }}
+  PORT: 8080
+  NAME: portfolio
+
+jobs:
+  build-deploy:
+    runs-on: [self-hosted]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build & Push Image
+        run: |
+          docker build -t localhost:${PORT}/${NAME}:${IMAGE_TAG} .
+          docker push localhost:${PORT}/${NAME}:${IMAGE_TAG}
+
+      - name: Deploy via Docker Compose
+        run: |
+          IMAGE_TAG=${IMAGE_TAG} docker compose up -d
