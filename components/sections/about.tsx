@@ -34,6 +34,9 @@ export function About() {
             importance of staying updated with the latest industry trends while
             maintaining a strong foundation in programming fundamentals.
           </p>
+          <p className="text-zinc-300 mb-6">
+            Based in Oslo, Norway, I am currently studying at Fyrstikkalleen Upper-secondary school. Born in 2006, I hold British nationality and am fluent in English and Norwegian, with conversational German. My hobbies include gaming and photography.
+          </p>
         </motion.div>
       </div>
     </section>
