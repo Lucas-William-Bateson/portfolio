@@ -9,10 +9,18 @@ import { useTrackSection } from "@/lib/hooks/useTrackSection";
 import { useTrackElement } from "@/lib/hooks/useTrackElement";
 import { trackEvent } from "@/lib/utils/analytics";
 
+interface Project {
+  title: string;
+  description: string;
+  image?: string; // Made optional
+  technologies: string[];
+  link?: string; // Already optional
+}
+
 export function Projects() {
   const sectionRef = useTrackSection({
     sectionName: "Projects",
-    additionalData: { isImportant: true }
+    additionalData: { isImportant: true },
   });
 
   const projectRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -28,9 +36,9 @@ export function Projects() {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
               // Track the project view event
-              trackEvent('Project viewed', {
+              trackEvent("Project viewed", {
                 project: project.title,
-                hasLink: project.link ? 'true' : 'false'
+                hasLink: project.link ? "true" : "false",
               });
               // Disconnect after first view to prevent multiple events
               observer.disconnect();
@@ -68,13 +76,18 @@ export function Projects() {
         </motion.div>
 
         <div className="space-y-12">
-          {projects.map((project, index) => (
+          {projects.map((project) => (
             <motion.div
-              key={index}
-              ref={el => projectRefs.current[index] = el}
+              key={project.title}
+              ref={(el) =>
+                (projectRefs.current[projects.indexOf(project)] = el)
+              }
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: index * 0.2 }}
+              transition={{
+                duration: 0.8,
+                delay: projects.indexOf(project) * 0.2,
+              }}
               viewport={{ once: true }}
               className="group"
             >
@@ -85,21 +98,25 @@ export function Projects() {
                   rel="noopener noreferrer"
                   data-umami-event="Project click"
                   data-umami-event-project={project.title}
-                  onClick={() => trackEvent('Project click', { project: project.title })}
+                  onClick={() =>
+                    trackEvent("Project click", { project: project.title })
+                  }
                 >
                   <div className="glass-card rounded-2xl overflow-hidden hover-neomorphic">
-                    <div className="relative h-[400px] w-full">
-                      <Image
-                        src={project.image}
-                        alt={project.title}
-                        fill
-                        sizes="(max-width: 768px) 100vw, 980px"
-                        loading="lazy"
-                        placeholder="blur"
-                        blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFeAJShWBPCwAAAABJRU5ErkJggg=="
-                        className="object-cover"
-                      />
-                    </div>
+                    {project.image && (
+                      <div className="relative h-[400px] w-full">
+                        <Image
+                          src={project.image}
+                          alt={project.title}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 980px"
+                          loading="lazy"
+                          placeholder="blur"
+                          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFeAJShWBPCwAAAABJRU5ErkJggg=="
+                          className="object-cover"
+                        />
+                      </div>
+                    )}
                     <div className="p-8">
                       <div className="flex justify-between items-start">
                         <div>
@@ -110,9 +127,9 @@ export function Projects() {
                             {project.description}
                           </p>
                           <div className="flex flex-wrap gap-2">
-                            {project.technologies.map((tech, techIndex) => (
+                            {project.technologies.map((tech) => (
                               <span
-                                key={techIndex}
+                                key={tech}
                                 className="px-3 py-1 neomorphic-card text-zinc-300 rounded-full text-sm"
                               >
                                 {tech}
@@ -132,31 +149,33 @@ export function Projects() {
                   data-umami-event-project={project.title}
                   data-umami-event-has-link="false"
                 >
-                  <div className="relative h-[400px] w-full">
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 980px"
-                      loading="lazy"
-                      placeholder="blur"
-                      blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFeAJShWBPCwAAAABJRU5ErkJggg=="
-                      className="object-cover"
-                    />
-                  </div>
+                  {project.image && (
+                    <div className="relative h-[400px] w-full">
+                      <Image
+                        src={project.image}
+                        alt={project.title}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 980px"
+                        loading="lazy"
+                        placeholder="blur"
+                        blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFeAJShWBPCwAAAABJRU5ErkJggg=="
+                        className="object-cover"
+                      />
+                    </div>
+                  )}
                   <div className="p-8">
                     <div className="flex justify-between items-start">
                       <div>
-                        <h3 className="text-2xl font-semibold mb-2">
+                        <h3 className="text-2xl font-semibold mb-2 text-white">
                           {project.title}
                         </h3>
-                        <p className="text-[#86868b] mb-4">
+                        <p className="text-zinc-400 mb-4">
                           {project.description}
                         </p>
                         <div className="flex flex-wrap gap-2">
-                          {project.technologies.map((tech, techIndex) => (
+                          {project.technologies.map((tech) => (
                             <span
-                              key={techIndex}
+                              key={tech}
                               className="px-3 py-1 bg-[#1d1d1f] text-white rounded-full text-sm"
                             >
                               {tech}
@@ -176,21 +195,41 @@ export function Projects() {
   );
 }
 
-const projects = [
+const projects: Project[] = [
+  {
+    title: "Fyrstikken",
+    description:
+      "A website for voting for the Audience favorite in my school awards ceremony. Both a frontend and backend app previously, but i later migrated to just use vercel server functions for the backend.",
+    image: "/fyrstikken.png",
+    technologies: ["TypeScript", "Next.js", "Supabase"],
+    link: "https://fyrstikken.f21elev.no/",
+  },
   {
     title: "Star Wars Wiki",
     description:
       "A website for Star Wars fans with detailed information on characters, planets, and starships. Built using React and TypeScript, with data legally collected from various sources.",
     image: "/starwarswiki.png",
     technologies: ["TypeScript", "React"],
-    link: "https://sww.lucasbateson.com",
+    link: "https://github.com/Lucas8448/StarWarsWiki",
   },
   {
-    title: "3D Terrain Generation",
+    title: "LinkDB",
     description:
-      "A simple 3D game that generates terrain using Perlin noise and voxels. Built with Python and the Ursina game engine.",
-    image: "/3d-game.png",
-    technologies: ["Python", "Ursina"],
-    link: "",
+      "A simple api based database which allows users to create a unique api key to access their own database tables and data.",
+    technologies: ["Python", "Flask", "ScyllaDB"],
+    link: "https://github.com/Lucas8448/LinkDB",
+  },
+  {
+    title: "Simplicity",
+    description:
+      "A custom built programming laguage that gets parsed into python code, designed to be used for students doing advanced maths with programming",
+    technologies: ["DSL", "Python"],
+    link: "https://github.com/Lucas8448/Simplicity",
+  },
+  {
+    title: "Fully local and custom CI/CD pipeline",
+    description:
+      "A fully local and customizable CI/CD pipeline built with Docker and GitHub Actions.",
+    technologies: ["Docker", "GitHub Actions"],
   },
 ];
