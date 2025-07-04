@@ -48,11 +48,12 @@ USER nextjs
 # Expose port
 EXPOSE ${APP_PORT:-3000}
 
-ENV PORT ${APP_PORT:-3000}
+# Set the port environment variable
+ENV PORT=${APP_PORT:-3000}
 
 # Add health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-    CMD wget --quiet --tries=1 --spider http://localhost:${APP_PORT:-3000} || exit 1
+    CMD wget --quiet --tries=1 --spider http://localhost:${PORT} || exit 1
 
 # Start the application
-CMD sh -c "serve -s out -l ${APP_PORT:-3000}"
+CMD ["sh", "-c", "serve -s out -l $PORT"]
