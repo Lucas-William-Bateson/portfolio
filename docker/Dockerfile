@@ -1,10 +1,16 @@
 # Multi-stage build for production optimization
 FROM node:18-alpine AS base
 
+# Define build arguments
+ARG APP_PORT=3000
+ARG APP_NAME=portfolio
+ARG VERSION=1.0.0
+ARG MAINTAINER_EMAIL=your-email@example.com
+
 # Add metadata labels
-LABEL maintainer="${MAINTAINER_EMAIL:-your-email@example.com}"
-LABEL project="${APP_NAME:-portfolio}"
-LABEL version="${VERSION:-1.0.0}"
+LABEL maintainer="${MAINTAINER_EMAIL}"
+LABEL project="${APP_NAME}"
+LABEL version="${VERSION}"
 LABEL description="Next.js Portfolio Application"
 
 # Install dependencies only when needed
@@ -30,6 +36,9 @@ RUN npm run build
 FROM base AS runner
 WORKDIR /app
 
+# Bring build args into this stage
+ARG APP_PORT=3000
+
 ENV NODE_ENV production
 
 # Install wget for health check and create non-root user
@@ -46,10 +55,10 @@ RUN npm install -g serve
 USER nextjs
 
 # Expose port
-EXPOSE ${APP_PORT:-3000}
+EXPOSE ${APP_PORT}
 
 # Set the port environment variable
-ENV PORT=${APP_PORT:-3000}
+ENV PORT=${APP_PORT}
 
 # Add health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
