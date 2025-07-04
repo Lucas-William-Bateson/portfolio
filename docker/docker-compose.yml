@@ -1,5 +1,13 @@
 services:
   app:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      args:
+        - APP_PORT=${APP_PORT}
+        - APP_NAME=${APP_NAME}
+        - VERSION=${VERSION}
+        - MAINTAINER_EMAIL=${MAINTAINER_EMAIL}
     image: ${IMAGE_FULL}
     container_name: ${CONTAINER_NAME}
     restart: always
@@ -15,7 +23,15 @@ services:
     ports:
       - "${HOST_PORT}:${APP_PORT}"
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:${APP_PORT}"]
+      test:
+        [
+          "CMD",
+          "wget",
+          "--quiet",
+          "--tries=1",
+          "--spider",
+          "http://localhost:${APP_PORT}",
+        ]
       interval: 30s
       timeout: 10s
       retries: 3

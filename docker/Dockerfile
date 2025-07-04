@@ -36,6 +36,9 @@ RUN npm run build
 FROM base AS runner
 WORKDIR /app
 
+# Bring build args into this stage
+ARG APP_PORT=3000
+
 ENV NODE_ENV production
 
 # Install wget for health check and create non-root user
@@ -51,15 +54,15 @@ RUN npm install -g serve
 
 USER nextjs
 
-# Expose port 3000 (internal container port)
-EXPOSE 3000
+# Expose the configured port
+EXPOSE ${APP_PORT}
 
 # Set the port environment variable
-ENV PORT=3000
+ENV PORT=${APP_PORT}
 
 # Add health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-    CMD wget --quiet --tries=1 --spider http://localhost:3000 || exit 1
+    CMD wget --quiet --tries=1 --spider http://localhost:${APP_PORT} || exit 1
 
 # Start the application
-CMD ["serve", "-s", "out", "-l", "3000"]
+CMD ["sh", "-c", "serve -s out -l ${PORT}"]
