@@ -113,6 +113,14 @@ jobs:
           echo "HOST_PORT=$HOST_PORT"
           echo "APP_PORT=$APP_PORT"
           
+          echo "Stopping any existing containers on port $HOST_PORT..."
+          EXISTING_CONTAINER=$(docker ps --filter "publish=$HOST_PORT" --format "{{.Names}}" | head -1)
+          if [ ! -z "$EXISTING_CONTAINER" ]; then
+            echo "Found existing container using port $HOST_PORT: $EXISTING_CONTAINER"
+            docker stop "$EXISTING_CONTAINER" || true
+            docker rm "$EXISTING_CONTAINER" || true
+          fi
+          
           # Stop existing containers gracefully
           docker compose -f docker-compose.yml -f docker-compose.prod.yml down --timeout 30 || true
           
