@@ -9,12 +9,39 @@ const inter = Inter({
   preload: true
 });
 
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+
 export const metadata: Metadata = {
   title: 'Lucas William Bateson - Software Developer',
   description: 'Portfolio of Lucas William Bateson, a software developer specializing in full-stack development.',
-  // Add metadata for better performance and SEO
   viewport: 'width=device-width, initial-scale=1',
   themeColor: '#000000',
+  metadataBase: new URL(siteUrl),
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    type: 'website',
+    url: siteUrl,
+    title: 'Lucas William Bateson - Software Developer',
+    description: 'Portfolio of Lucas William Bateson, a software developer specializing in full-stack development.',
+    siteName: 'Lucas Bateson',
+    images: [
+      {
+        url: '/background.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Lucas Bateson portfolio hero background',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Lucas William Bateson - Software Developer',
+    description: 'Portfolio of Lucas William Bateson, a software developer specializing in full-stack development.',
+    images: ['/background.jpg'],
+  },
 };
 
 export default function RootLayout({
