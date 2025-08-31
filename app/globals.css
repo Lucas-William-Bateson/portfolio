@@ -17,6 +17,14 @@
     @apply bg-background text-foreground;
     min-height: 100vh;
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation: none !important;
+      transition: none !important;
+      scroll-behavior: auto !important;
+    }
+  }
 }
 
 @layer utilities {

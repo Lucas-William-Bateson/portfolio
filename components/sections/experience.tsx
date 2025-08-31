@@ -11,7 +11,7 @@ export function Experience() {
   });
 
   return (
-    <section id="experience" ref={sectionRef} className="py-20">
+    <section id="experience" ref={sectionRef} className="py-20 scroll-mt-24">
       <div className="max-w-[980px] mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -8,7 +8,7 @@ import { Credits } from "@/components/credits";
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen bg-main bg-fixed bg-cover bg-center">
+    <main className="relative min-h-screen bg-mobile-main md:bg-main md:bg-fixed bg-cover bg-center">
       <Navigation />
       <Hero />
       <About />

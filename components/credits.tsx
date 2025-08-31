@@ -8,7 +8,7 @@ export function Credits() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 1, duration: 1 }}
-      className="fixed bottom-4 right-4 text-xs text-zinc-500 hover:text-zinc-300 transition-colors"
+      className="hidden sm:block fixed bottom-4 right-4 text-xs text-zinc-500 hover:text-zinc-300 transition-colors"
     >
       <div className="flex gap-1">
         <span>Image by</span>
