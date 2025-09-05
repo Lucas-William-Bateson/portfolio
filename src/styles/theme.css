@@ -1,0 +1,53 @@
+:root,
+[data-theme='violet'],
+[data-theme='dark'] {
+  --bg: #0d0d0d;
+  --panel: #141414;
+  --border: #1f1f1f;
+  --text: #ffffff;
+  --muted: #cccccc;
+
+  --primary: #e63946;
+  --accent: #ffb703;
+
+  --badge-bg: #65171d;
+  --badge-border: #a72d37;
+}
+[data-theme='blue'] {
+  --primary: #60a5fa;
+  --accent: #34d399;
+}
+
+[data-theme='red'] {
+  --primary: #f87171;
+  --accent: #fb7185;
+}
+
+[data-theme='cyber'] {
+  --bg: #060912;
+  --panel: #0a0f1e;
+  --border: #1a2036;
+  --text: #e6f0ff;
+  --muted: #9bb0c2;
+  --primary: #00f0ff;
+  --accent: #ff00e5;
+  --badge-bg: #0f223a;
+  --badge-border: #214a8b;
+}
+[data-theme='brg'],
+[data-theme='british-racing-green'] {
+  --bg: #06100b;
+  --panel: #122a21;
+  --border: #2b5f48;
+  --text: #eef7f1;
+  --muted: #a6bfb2;
+
+  --primary: #18a362;
+  --accent: #d4af37;
+
+  --badge-bg: #0b231b;
+  --badge-border: #3a8f6d;
+}
+:root {
+  --radius: 14px;
+}

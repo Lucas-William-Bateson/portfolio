@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html, body { height: 100%; }
+  body { @apply relative min-h-screen bg-bg text-text font-sans antialiased; }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+      url('/veins-tl.svg'),
+      url('/veins-br.svg'),
+      radial-gradient(60rem 40rem at left top, rgba(255,255,255,0.03), transparent 60%),
+      radial-gradient(60rem 40rem at right bottom, rgba(255,255,255,0.03), transparent 60%);
+    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+    background-position: left top, right bottom, left top, right bottom;
+    background-size: 60% auto, 60% auto, 100% 100%, 100% 100%;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image: url('/texture-noise.svg');
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+  }
+  a { @apply text-inherit no-underline; }
+  a:hover { color: var(--primary); }
+}
+
+@layer components {
+  .container-narrow { @apply max-w-5xl mx-auto px-6; }
+  .card { @apply relative overflow-hidden bg-panel border border-border rounded-xl p-5 transition-colors; }
+  .card:hover { border-color: color-mix(in srgb, var(--primary) 45%, var(--border)); }
+  .section-title { @apply text-3xl font-bold text-text; letter-spacing: 0.01em; }
+  .section-subtitle { @apply text-muted; }
+  .badge { @apply text-[11px] font-medium px-2.5 py-1 rounded-md uppercase tracking-wide; border: 1px solid var(--badge-border); background-color: var(--badge-bg); color: white; }
+  .badge-accent { @apply text-[11px] font-medium px-2 py-0.5 rounded-md uppercase tracking-wide; border: 1px solid transparent; background-color: color-mix(in srgb, var(--accent) 18%, transparent); color: var(--accent); }
+  .btn-outline { @apply inline-flex items-center gap-2 px-3 py-2 rounded-xl border; border-color: rgba(255,255,255,0.25); color: white; }
+
+  .h-sep { @apply border-t border-border; }
+  .v-sep { @apply border-l border-border; }
+  .meta { @apply text-xs text-muted font-mono; letter-spacing: 0.02em; }
+  .link-raw { @apply inline-block text-primary; border-bottom: 1px dotted color-mix(in srgb, var(--primary) 40%, transparent); }
+  .link-raw:hover { border-bottom-color: var(--primary); }
+}
+
+@layer components {
+  .tag-raw { @apply text-[12px] font-semibold tracking-wide; color: var(--primary); }
+  .list-dash { list-style: none; padding-left: 0; }
+  .list-dash li { display: flex; gap: 0.5rem; align-items: flex-start; }
+  .list-dash li::before { content: '–'; color: var(--accent); line-height: 1.25; }
+}

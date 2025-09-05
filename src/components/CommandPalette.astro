@@ -1,0 +1,32 @@
+---
+type Action = { id: string; title: string; hotkey?: string[]; handler?: string; section?: string };
+const { actions = [] as Action[] } = Astro.props as { actions?: Action[] };
+---
+<ninja-keys placeholder="Jump to…" hideBreadcrumbs>
+  {
+    actions.map(a => (
+      <ninja-action id={a.id} title={a.title} hotkey={a.hotkey?.join(' ')} section={a.section} data-handler={a.handler}>
+      </ninja-action>
+    ))
+  }
+</ninja-keys>
+
+<script>
+  const nk = document.querySelector('ninja-keys');
+  nk?.addEventListener('change', (ev) => {
+    const el = ev.detail?.item;
+    const handler = el?.getAttribute('data-handler');
+    if (!handler) return;
+    if (handler.startsWith('#')) {
+      location.hash = handler;
+    } else {
+      window.open(handler, '_blank', 'noopener');
+    }
+  });
+  document.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      nk?.open();
+    }
+  });
+</script>

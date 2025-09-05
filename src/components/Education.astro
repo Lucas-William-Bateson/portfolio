@@ -1,0 +1,27 @@
+---
+type Edu = { school: string; program?: string; years?: string; certificates?: string[] };
+const { items = [] as Edu[] } = Astro.props as { items?: Edu[] };
+---
+{items && items.length ? (
+  <div class="grid gap-6">
+    {items.map((e) => (
+      <div class="relative pl-4 v-sep py-2">
+        <span class="absolute -left-1 top-2 w-2 h-2 rounded-full" style="background-color: var(--accent)"></span>
+        <div class="flex items-center gap-2">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3 1 9l11 6 9-4.91V17h2V9L12 3Zm-7 9.2V15l7 4 7-4v-2.8l-7 3.82-7-3.82Z"/></svg>
+          <div class="font-semibold text-white">{e.school}</div>
+        </div>
+        {e.program || e.years ? (
+          <div class="text-sm text-muted">{[e.program, e.years].filter(Boolean).join(' • ')}</div>
+        ) : null}
+        {e.certificates && e.certificates.length ? (
+          <ul class="list-dash text-sm text-muted mt-1">
+            {e.certificates.map(c => (<li>{c}</li>))}
+          </ul>
+        ) : null}
+      </div>
+    ))}
+  </div>
+) : (
+  <div class="text-sm text-muted">Add an "education" array to cv.json to populate this section.</div>
+)}

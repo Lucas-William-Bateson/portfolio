@@ -1,0 +1,134 @@
+{
+  "name": "Lucas Bateson",
+  "role": "Software Developer",
+  "tagline": "Developing at NAV IT",
+  "dataTheme": "brg",
+  "about": [
+    "I am a software developer specializing in both front-end and back-end development. I have a passion for writing reliable, maintainable, and well-documented code that solves real-world problems.",
+    "I enjoy working with modern frameworks and technologies, constantly exploring new tools to enhance my skill set. I believe in the importance of staying updated with the latest industry trends while maintaining a strong foundation in programming fundamentals."
+  ],
+  "skills": [
+    {
+      "icon": "twemoji:high-voltage",
+      "title": "Frontend",
+      "items": ["Next.js", "React", "TypeScript"]
+    },
+    {
+      "icon": "ph:wrench-bold",
+      "title": "Backend",
+      "items": ["TypeScript", "Node.js", "JVM frameworks"]
+    },
+    {
+      "icon": "solar:lock-keyhole-broken",
+      "title": "Database",
+      "items": ["ScyllaDB", "SQLite3", "PostgreSQL"]
+    },
+    { "icon": "ph:cloud", "title": "Cloud", "items": ["Azure", "GCP", "DigitalOcean"] }
+  ],
+  "experience": [
+    {
+      "role": "Full Stack Developer",
+      "company": "Nav IT",
+      "time": "Aug 2024 – Present • Oslo, Norway • On-site",
+      "summary": "Two-year internship at the Norwegian Labour and Welfare Administration working across the stack.",
+      "tags": ["TypeScript", "Front-End Development"]
+    },
+    {
+      "role": "Software Developer",
+      "company": "Nav IT",
+      "time": "Jan 2024 – Jun 2024 • Oslo, Norway • On-site",
+      "summary": "Began with a 3‑week work placement, then worked every Wednesday.",
+      "tags": ["Internet Design", "REST APIs"]
+    },
+    {
+      "role": "Data Analyst",
+      "company": "Visma Norway",
+      "time": "Nov 2023 – Dec 2023 • Oslo, Norway • On-site",
+      "summary": "One‑week internship doing data analysis for the InSchool service in Amazon QuickSight.",
+      "tags": ["Data Analysis", "Amazon QuickSight"]
+    },
+    {
+      "role": "Software Development Intern",
+      "company": "Intility",
+      "time": "Nov 2023 – Nov 2023 • Oslo, Norway • On-site",
+      "summary": "One‑week internship learning their systems and doing OpenAI API tasks; also worked with Azure permissions and handled support cases.",
+      "tags": ["Technical Support", "ChatGPT", "Azure"]
+    },
+    {
+      "role": "Frontend Developer",
+      "company": "Glasspaper Solutions",
+      "time": "Feb 2023 – Feb 2023 • Oslo, Norway • On-site",
+      "summary": "One‑week internship developing a frontend invoicing solution in Vue.js.",
+      "tags": ["Internet Design", "JavaScript", "Vue.js"]
+    },
+    {
+      "role": "Programming Teacher",
+      "company": "Oslo Commune",
+      "summary": "Taught block programming to grade 4 students.",
+      "tags": ["Teaching", "Education"]
+    }
+  ],
+  "education": [
+    {
+      "school": "Fyrstikkalleen VGS",
+      "program": "Information Technology and Media Production",
+      "years": "Aug 2022 – Jun 2024",
+      "certificates": ["VG1: 5.5", "VG2: 5.95"]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Fyrstikken",
+      "description": "Audience voting website for a school awards ceremony. Initially built with a separate backend, later migrated to Vercel server functions.",
+      "tags": ["TypeScript", "Next.js", "Supabase"],
+      "url": "https://github.com/F21-Fyrstikken/Fyrstikken"
+    },
+    {
+      "name": "Star Wars Wiki",
+      "description": "Fan site with details on characters, planets, and starships. Built with React and TypeScript with properly sourced data.",
+      "tags": ["TypeScript", "React"],
+      "url": "https://github.com/Lucas8448/StarWarsWiki"
+    },
+    {
+      "name": "LinkDB",
+      "description": "Simple API-based database where users get a unique API key to manage their own tables and data.",
+      "tags": ["Python", "Flask", "ScyllaDB"],
+      "url": "https://github.com/Lucas8448/LinkDB"
+    },
+    {
+      "name": "Simplicity",
+      "description": "Custom programming language parsed to Python, designed for students doing advanced math with programming.",
+      "tags": ["DSL", "Python"],
+      "url": "https://github.com/Lucas8448/Simplicity"
+    },
+    {
+      "name": "Local, Custom CI/CD",
+      "description": "Fully local and customizable CI/CD pipeline built with Docker and GitHub Actions.",
+      "tags": ["Docker", "GitHub Actions"],
+      "url": "https://www.linkedin.com/feed/update/urn:li:activity:7355352813587021825/"
+    },
+    {
+      "name": "Gauss Legendre",
+      "description": "Calculates π to a high precision using the Gauss-Legendre algorithm, implemented in Python.",
+      "tags": ["Assembly", "Mathematics"],
+      "url": "https://github.com/Lucas8448/Gauss-Legendre-Calculator"
+    },
+    {
+      "name": "BaneX",
+      "description": "Tool for planning train parking in accordance to services for VY trains.",
+      "tags": ["Python", "TypeScript"],
+      "url": "https://github.com/Lucas8448/BaneX"
+    },
+    {
+      "name": "Python-Examples",
+      "description": "Collection of Python examples, to introduce beginners to core concepts of the language.",
+      "tags": ["Python"],
+      "url": "https://github.com/Lucas8448/Python-Examples"
+    }
+  ],
+  "links": [
+    { "label": "GitHub", "url": "https://github.com/Lucas8448" },
+    { "label": "LinkedIn", "url": "https://www.linkedin.com/in/lucas-bateson/" },
+    { "label": "Email", "url": "mailto:lucas.bateson@gmail.com" }
+  ]
+}
