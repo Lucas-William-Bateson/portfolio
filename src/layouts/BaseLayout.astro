@@ -1,0 +1,26 @@
+---
+const {
+  title = 'Lucas Bateson',
+  description = 'Software developer — frontend, backend, cloud.',
+  theme = 'violet'
+} = Astro.props as { title?: string; description?: string; theme?: string };
+import '../styles/theme.css';
+import '../styles/tailwind.css';
+---
+<html lang="en" data-theme={theme}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>⚡️</text></svg>" />
+    <script defer src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/ninja-keys@1.2.2"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" />
+    <script defer src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script>
+  </head>
+  <body>
+    <slot />
+  </body>
+  
+</html>

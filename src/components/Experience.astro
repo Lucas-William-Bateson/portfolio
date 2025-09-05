@@ -1,0 +1,41 @@
+---
+type Role = {
+  role: string;
+  company: string;
+  summary: string;
+  tags?: string[];
+  time?: string;
+  responsibilities?: string[];
+  companyUrl?: string;
+};
+const { roles = [] as Role[] } = Astro.props as { roles?: Role[] };
+---
+<div class="grid gap-6">
+  {roles.map((r) => (
+    <div class="relative pl-4 v-sep py-2">
+      <span class="absolute -left-1 top-2 w-2 h-2 rounded-full" style="background-color: var(--accent)"></span>
+      {r.time ? (<div class="meta">{r.time}</div>) : null}
+      <div class="flex items-center justify-between gap-2">
+        <div class="font-semibold text-white">{r.role}</div>
+        <div class="flex items-center gap-2">
+          {r.companyUrl ? (
+            <a class="text-primary font-semibold inline-flex items-center gap-1" href={r.companyUrl} target="_blank" rel="noreferrer noopener">{r.company}<span aria-hidden>↗</span></a>
+          ) : (
+            <div class="text-primary font-semibold">{r.company}</div>
+          )}
+        </div>
+      </div>
+      <div class="text-muted">{r.summary}</div>
+      {r.responsibilities && r.responsibilities.length ? (
+        <ul class="list-dash text-muted mt-1">
+          {r.responsibilities.map(item => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      ) : null}
+      {r.tags && r.tags.length ? (
+        <div class="flex flex-wrap gap-3 mt-1">{r.tags.map(t => (<span class="tag-raw">#{t}</span>))}</div>
+      ) : null}
+    </div>
+  ))}
+</div>

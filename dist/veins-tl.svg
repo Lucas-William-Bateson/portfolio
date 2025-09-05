@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" preserveAspectRatio="xMinYMin slice">
+  <defs>
+    <linearGradient id="fade" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" stroke="url(#fade)" stroke-width="1">
+    <path d="M0 20 C 200 60, 380 140, 520 260"/>
+    <path d="M0 120 C 180 160, 360 220, 500 330"/>
+    <path d="M0 220 C 150 250, 320 310, 460 420"/>
+    <path d="M80 0 C 160 100, 260 180, 400 260"/>
+    <path d="M180 0 C 260 100, 360 200, 560 300"/>
+    <path d="M300 0 C 420 80, 580 200, 760 320"/>
+  </g>
+</svg>
+

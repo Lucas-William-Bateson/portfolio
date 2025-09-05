@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Sidebar from '../components/Sidebar.astro';
+import Skills from '../components/Skills.astro';
+import Experience from '../components/Experience.astro';
+import Projects from '../components/Projects.astro';
+import Contact from '../components/Contact.astro';
+import CommandPalette from '../components/CommandPalette.astro';
+import Education from '../components/Education.astro';
+import cv from '../../cv.json';
+---
+<BaseLayout title={`${cv.name} — Portfolio`} description={`${cv.name} — ${cv.role}`} theme={cv.dataTheme}>
+  <main class="container-narrow py-10">
+    <div class="grid gap-10 md:gap-16 md:grid-cols-[25%_1fr]">
+      <Sidebar name={cv.name} role={cv.role} tagline={cv.tagline} location={cv.location} links={cv.links} about={cv.about} />
+
+      <div class="grid gap-10 md:gap-16 pl-0 md:pl-[100px]">
+        <section id="experience" class="grid gap-4">
+          <h2 class="section-title">Experience</h2>
+          <Experience roles={cv.experience} />
+        </section>
+
+        <section id="projects" class="grid gap-4">
+          <h2 class="section-title">Projects</h2>
+          <Projects projects={cv.projects} />
+        </section>
+
+        <section id="education" class="grid gap-4">
+          <h2 class="section-title">Education</h2>
+          <Education items={cv.education} />
+        </section>
+
+        <section id="skills" class="grid gap-4">
+          <h2 class="section-title">Skills</h2>
+          <Skills skills={cv.skills} />
+        </section>
+
+        <section id="contact" class="grid gap-4">
+          <h2 class="section-title">Contact</h2>
+          <Contact links={cv.links} />
+        </section>
+
+        <footer class="border-t border-border py-10">
+          <div class="text-muted">© {new Date().getFullYear()} {cv.name}</div>
+        </footer>
+      </div>
+    </div>
+  </main>
+
+  <CommandPalette actions={[
+    { id: 'go-experience', title: 'Go to Experience', hotkey: ['g','e'], handler: '#experience', section: 'Navigate' },
+    { id: 'go-projects', title: 'Go to Projects', hotkey: ['g','p'], handler: '#projects', section: 'Navigate' },
+    { id: 'go-education', title: 'Go to Education', hotkey: ['g','d'], handler: '#education', section: 'Navigate' },
+    { id: 'go-skills', title: 'Go to Skills', hotkey: ['g','s'], handler: '#skills', section: 'Navigate' },
+    { id: 'go-contact', title: 'Go to Contact', hotkey: ['g','c'], handler: '#contact', section: 'Navigate' },
+    ...cv.links.map((l, i) => ({ id: `link-${i}`, title: l.label, handler: l.url, section: 'Links' }))
+  ]} />
+</BaseLayout>

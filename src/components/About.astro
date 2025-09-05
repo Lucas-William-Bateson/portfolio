@@ -1,0 +1,14 @@
+---
+const { about = [] as string[] } = Astro.props as { about?: string[] };
+---
+<section id="about" class="py-10">
+  <div class="container-narrow">
+    <div class="mb-4">
+      <div class="text-xs uppercase tracking-widest text-accent font-semibold">About Me</div>
+      <h2 class="text-2xl sm:text-3xl font-bold mt-1">Building reliable, maintainable software</h2>
+    </div>
+    <div class="space-y-4 text-muted">
+      {about.map(p => (<p>{p}</p>))}
+    </div>
+  </div>
+</section>
