@@ -9,10 +9,11 @@ type Project = {
   highlight?: string;
 };
 const { projects = [] as Project[] } = Astro.props as { projects?: Project[] };
+const VISIBLE_COUNT = 4;
 ---
 <div class="grid gap-8 md:grid-cols-2">
-  {projects.map((p) => (
-    <div class="relative pl-4 v-sep">
+  {projects.map((p, i) => (
+    <div class={`relative pl-4 v-sep ${i >= VISIBLE_COUNT ? 'hidden js-more-proj' : ''}`}>
       {p.highlight ? (<div class="meta mb-1">{p.highlight}</div>) : null}
       <div class="flex items-center justify-between">
         <div class="font-semibold text-white text-lg">{p.name}</div>
@@ -34,4 +35,28 @@ const { projects = [] as Project[] } = Astro.props as { projects?: Project[] };
       ) : null}
     </div>
   ))}
+  {projects.length > VISIBLE_COUNT ? (
+    <div class="md:col-span-2 flex items-center gap-3">
+      <button id="proj-show-btn" class="btn-outline w-fit" aria-expanded="false">Show more</button>
+      <button id="proj-hide-btn" class="btn-outline w-fit hidden" aria-expanded="true">Hide</button>
+    </div>
+  ) : null}
 </div>
+<script>
+  const projShowBtn = document.getElementById('proj-show-btn');
+  const projHideBtn = document.getElementById('proj-hide-btn');
+  if (projShowBtn && projHideBtn) {
+    projShowBtn.addEventListener('click', () => {
+      document.querySelectorAll('.js-more-proj').forEach((el) => el.classList.remove('hidden'));
+      projShowBtn.classList.add('hidden');
+      projHideBtn.classList.remove('hidden');
+      projHideBtn.focus();
+    });
+    projHideBtn.addEventListener('click', () => {
+      document.querySelectorAll('.js-more-proj').forEach((el) => el.classList.add('hidden'));
+      projHideBtn.classList.add('hidden');
+      projShowBtn.classList.remove('hidden');
+      projShowBtn.focus();
+    });
+  }
+</script>
