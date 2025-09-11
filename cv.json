@@ -78,6 +78,12 @@
   ],
   "projects": [
     {
+      "name": "Tic-Tac-Toe game",
+      "description": "Three in a row game made in Kotlin as a pair programming assignment to get more familiar with Kotlin and testing.",
+      "tags": ["Kotlin", "JUnit", "Gradle"],
+      "url": "https://github.com/Zandra7/kotlin-Tic-Tac-Toe"
+    },
+    {
       "name": "Fyrstikken",
       "description": "Audience voting website for a school awards ceremony. Initially built with a separate backend, later migrated to Vercel server functions.",
       "tags": ["TypeScript", "Next.js", "Supabase"],
