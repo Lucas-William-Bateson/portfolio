@@ -1,0 +1,10 @@
+[build]
+dockerfile = "docker/Dockerfile"
+
+[deploy]
+name = "portfolio"
+domain = "portfolio.l3s.me"
+port = 3000
+
+[env]
+NODE_ENV = "production"
