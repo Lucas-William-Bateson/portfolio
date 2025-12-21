@@ -3,7 +3,7 @@ dockerfile = "docker/Dockerfile"
 
 [deploy]
 name = "portfolio"
-domains = ["portfolio.l3s.me", "l3s.me", "lucasbateson.com"]
+domains = ["portfolio.l3s.me", "l3s.me", "lucasbateson.com", "portfolio.lucasbateson.com"]
 port = 3000
 
 [env]
