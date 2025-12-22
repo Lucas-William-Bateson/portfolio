@@ -18,7 +18,7 @@
         ],
         "scope": "2D kinematic model with simplified dynamics",
         "evidence": "Evaluated through deterministic runs and Monte Carlo scenario sweeps",
-        "url": "https://github.com/Lucas8448/Deadreckon"
+        "url": "https://github.com/Lucas8448/deadreckon"
       },
       {
         "name": "Foundry",
@@ -30,7 +30,7 @@
         ],
         "scope": "Optimized for small, sovereign deployments",
         "evidence": "Used to execute containerized workloads via local runners",
-        "url": "https://github.com/Lucas8448/Foundry"
+        "url": "https://github.com/Lucas-William-Bateson/foundry"
       }
     ],
     "foundational": [
@@ -44,7 +44,7 @@
         ],
         "scope": "Simple forward-Euler integrator",
         "evidence": "Numerical behavior observed over extended simulation runs",
-        "url": "https://github.com/Lucas8448/N-Body"
+        "url": "https://github.com/Lucas8448/N-body-simulator"
       },
       {
         "name": "Neural-Nets",
@@ -56,7 +56,7 @@
         ],
         "scope": "Educational implementations, not production models",
         "evidence": "Training behavior observed through loss convergence",
-        "url": "https://github.com/Lucas8448/Neural-Nets"
+        "url": "https://github.com/Lucas8448/neural-nets"
       },
       {
         "name": "Oxidize",
@@ -68,7 +68,7 @@
         ],
         "scope": "Experimental engine architecture",
         "evidence": "Performance characteristics explored under varying world sizes",
-        "url": "https://github.com/Lucas8448/Oxidize"
+        "url": "https://github.com/Lucas8448/oxidize"
       }
     ]
   },
