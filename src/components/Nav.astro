@@ -1,18 +1,18 @@
 ---
 interface Link { href: string; label: string }
 const { name = 'Lucas Bateson', links = [
-  { href: '#about', label: 'About' },
-  { href: '#experience', label: 'Experience' },
-  { href: '#projects', label: 'Projects' },
+  { href: '#overview', label: 'Overview' },
+  { href: '#work', label: 'Work' },
+  { href: '#systems', label: 'Systems' },
   { href: '#contact', label: 'Contact' },
 ] as Link[] } = Astro.props as { name?: string; links?: Link[] };
 ---
-<nav class="sticky top-0 z-10 backdrop-blur bg-bg/85 border-b border-border">
-  <div class="container-narrow h-16 flex items-center justify-between">
-    <a href="#top" class="font-bold">{name}</a>
-    <div class="hidden sm:flex gap-4 text-muted">
-      {links.map(l => (<a class="hover:text-text" href={l.href}>{l.label}</a>))}
+<nav class="sticky top-0 z-10 bg-bg border-b border-border">
+  <div class="container-narrow h-12 flex items-center justify-between">
+    <a href="#top" class="font-medium text-text">{name}</a>
+    <div class="hidden sm:flex gap-6 text-sm text-muted">
+      {links.map(l => (<a class="hover:text-text transition-colors" href={l.href}>{l.label}</a>))}
     </div>
-    <button class="sm:hidden px-3 py-1 border border-border rounded-xl text-sm" onclick="document.querySelector('ninja-keys')?.open()">Menu</button>
+    <button class="sm:hidden px-2 py-1 text-sm text-muted" onclick="document.querySelector('ninja-keys')?.open()">Menu</button>
   </div>
 </nav>

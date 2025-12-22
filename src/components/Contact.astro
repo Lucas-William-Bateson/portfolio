@@ -2,11 +2,11 @@
 type Link = { label: string; url: string };
 const { links = [] as Link[] } = Astro.props as { links?: Link[] };
 ---
-<div class="flex items-center justify-between gap-4 flex-wrap">
-  <div class="text-muted">Ping me for projects or questions.</div>
-  <div class="flex gap-3">
+<div>
+  <p class="text-sm text-muted/70 mb-3">Open to collaboration on systems, simulation, and infrastructure.</p>
+  <div class="flex gap-4 text-xs text-muted/60">
     {links.map(l => (
-      <a class="link-raw" href={l.url} target={l.url.startsWith('http') ? '_blank' : undefined} rel="noreferrer noopener">{l.label}</a>
+      <a class="hover:text-primary transition-colors" href={l.url} target={l.url.startsWith('http') ? '_blank' : undefined} rel="noreferrer noopener">{l.label}</a>
     ))}
   </div>
 </div>
