@@ -28,3 +28,4 @@ timezone = "UTC"
 
 [env]
 NODE_ENV = "production"
+
