@@ -1,10 +1,30 @@
 [build]
 dockerfile = "docker/Dockerfile"
+context = "."
+timeout = 1800
+
+[triggers]
+branches = ["main"]
+pull_requests = true
+
+[[stages]]
+name = "install"
+command = "npm ci"
+
+[[stages]]
+name = "build"
+command = "npm run build"
 
 [deploy]
 name = "portfolio"
 domains = ["portfolio.l3s.me", "l3s.me", "lucasbateson.com", "portfolio.lucasbateson.com"]
 port = 3000
+
+[schedule]
+cron = "0 5 * * *"
+branch = "main"
+enabled = true
+timezone = "UTC"
 
 [env]
 NODE_ENV = "production"
