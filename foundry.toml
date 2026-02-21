@@ -19,6 +19,7 @@ command = "npm run build"
 name = "portfolio"
 domains = ["portfolio.l3s.me", "l3s.me", "lucasbateson.com", "portfolio.lucasbateson.com"]
 port = 3000
+env_file = "secrets.env"
 
 [schedule]
 cron = "0 0 5 * * * *"
