@@ -74,6 +74,17 @@ type System = {
       </div>
     </section>
 
+    <!-- INFRASTRUCTURE -->
+    <section id="infrastructure" class="mb-20">
+      <h2 class="text-[11px] font-semibold tracking-[0.2em] uppercase text-muted mb-6">Infrastructure</h2>
+      <p class="text-sm text-muted leading-relaxed max-w-lg">{cv.infrastructure.summary}</p>
+      <div class="mt-4 flex flex-wrap gap-x-6 gap-y-1.5">
+        {cv.infrastructure.services.map((s: string) => (
+          <span class="text-xs text-muted/60">{s}</span>
+        ))}
+      </div>
+    </section>
+
     <!-- WORK -->
     <section id="work" class="mb-16">
       <h2 class="text-[11px] font-semibold tracking-[0.2em] uppercase text-muted mb-6">Work</h2>
@@ -118,6 +129,7 @@ type System = {
 
   <CommandPalette actions={[
     { id: 'go-systems', title: 'Go to Systems', hotkey: ['g','s'], handler: '#systems', section: 'Navigate' },
+    { id: 'go-infrastructure', title: 'Go to Infrastructure', hotkey: ['g','i'], handler: '#infrastructure', section: 'Navigate' },
     { id: 'go-work', title: 'Go to Work', hotkey: ['g','w'], handler: '#work', section: 'Navigate' },
     { id: 'go-education', title: 'Go to Education', hotkey: ['g','e'], handler: '#education', section: 'Navigate' },
     { id: 'go-links', title: 'Go to Links', hotkey: ['g','l'], handler: '#links', section: 'Navigate' },

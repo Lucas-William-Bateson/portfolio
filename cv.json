@@ -2,9 +2,9 @@
   "name": "Lucas Bateson",
   "dataTheme": "light",
   "hero": {
-    "primary": "Deterministic systems software for simulation, estimation, and control.",
-    "secondary": "Concerned with how systems behave, not just whether they work.",
-    "tertiary": "Rust-first personal systems. Production experience at NAV IT."
+    "primary": "I write software to understand how things work.",
+    "secondary": "Rust, simulations, self-hosted infrastructure. Currently building production systems at NAV IT.",
+    "tertiary": "Oslo, Norway."
   },
   "systems": {
     "primary": [
@@ -13,27 +13,40 @@
         "purpose": "Deterministic guidance and interception simulation under imperfect state information.",
         "capabilities": [
           "Proportional navigation guidance",
-          "Scenario-based evaluation",
-          "Telemetry and miss-distance metrics"
+          "Sensor noise modeling (realistic, degraded, extreme)",
+          "Monte Carlo scenario analysis with configurable sweeps"
         ],
-        "scope": "2D kinematic model with simplified dynamics",
-        "evidence": "Evaluated through deterministic runs and Monte Carlo scenario sweeps",
+        "scope": "Rust workspace: sim_core, sim_cli, and sim_viz with real-time visualization",
+        "evidence": "Evaluated across 6 engagement scenarios with configurable noise profiles",
         "url": "https://github.com/Lucas8448/deadreckon"
       },
       {
         "name": "Foundry",
-        "purpose": "Self-hosted CI/CD system designed for controlled, reproducible execution.",
+        "purpose": "Self-hosted CI/CD platform replacing GitHub Actions with full deployment automation.",
         "capabilities": [
-          "Job scheduling and agent runners",
-          "Declarative pipeline configuration",
-          "Deployment and observability tooling"
+          "GitHub webhook integration with automatic builds and PR checks",
+          "Docker container execution with workspace isolation",
+          "Automatic domain routing via Cloudflare Tunnels",
+          "Scheduled builds, secrets injection, and self-deployment"
         ],
-        "scope": "Optimized for small, sovereign deployments",
-        "evidence": "Used to execute containerized workloads via local runners",
+        "scope": "Rust backend with PostgreSQL, React/TypeScript dashboard",
+        "evidence": "Deploys itself and 6+ services to a sovereign Mac Mini M4 server",
         "url": "https://github.com/Lucas-William-Bateson/foundry"
       }
     ],
     "foundational": [
+      {
+        "name": "Propagator",
+        "purpose": "State propagation library for physical systems with composable force models and numerical integration.",
+        "capabilities": [
+          "RK4 numerical integration",
+          "Composable force pipeline (gravity, drag, thrust)",
+          "Environment and reference frame modeling"
+        ],
+        "scope": "Rust library designed as simulation substrate",
+        "evidence": "Modular architecture supporting downstream simulation projects",
+        "url": "https://github.com/Lucas8448/propagator"
+      },
       {
         "name": "N-Body Simulator",
         "purpose": "Numerical experiment exploring integration accuracy and long-term stability in gravitational systems.",
@@ -72,6 +85,15 @@
       }
     ]
   },
+  "infrastructure": {
+    "summary": "All personal services run on a Mac Mini M4, deployed through Foundry, and exposed via Cloudflare Tunnels.",
+    "services": [
+      "CI/CD (Foundry)",
+      "Portfolio — l3s.me",
+      "Notes — notes.l3s.me",
+      "Uptime monitoring — status.l3s.me"
+    ]
+  },
   "work": [
     {
       "role": "Software Developer",
@@ -99,6 +121,7 @@
   },
   "links": [
     { "label": "GitHub", "url": "https://github.com/Lucas8448" },
+    { "label": "Notes", "url": "https://notes.l3s.me" },
     { "label": "LinkedIn", "url": "https://www.linkedin.com/in/lucas-bateson/" },
     { "label": "Email", "url": "mailto:lucas.bateson@gmail.com" }
   ]
