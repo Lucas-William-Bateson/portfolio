@@ -4,6 +4,19 @@ runner "default" {
   image = "node:20-slim"
 }
 
+secrets from vault("portfolio/prod") {
+  CONTAINER_NAME
+  IMAGE_FULL
+  CPU_LIMIT
+  MEMORY_LIMIT
+  HOST_PORT
+  APP_PORT
+  APP_NAME
+  ENVIRONMENT
+  MAINTAINER_EMAIL
+  NETWORK_NAME
+}
+
 on push("main"), pr("main") {
   stage install on runner.default {
     run "npm ci"
@@ -17,10 +30,9 @@ on push("main"), pr("main") {
     timeout 10m
   }
 
-  stage deploy on runner.default {
+  stage release on runner.default {
     needs build
     condition on_push
-    run "scripts/deploy.sh"
     deploy {
       name = "portfolio"
       domain = "l3s.me"
