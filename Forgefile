@@ -4,7 +4,7 @@ runner "default" {
   image = "node:20-slim"
 }
 
-secrets from vault("portfolio/prod") {
+secrets from store("portfolio/prod") {
   CONTAINER_NAME
   IMAGE_FULL
   CPU_LIMIT
