@@ -2,3 +2,4 @@ node_modules
 .next
 # Secrets
 secrets.env
+#ignore more
