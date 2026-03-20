@@ -1,21 +1,10 @@
-/* SAAB Aerospace Industrial Theme */
 :root,
-[data-theme='light'],
-[data-theme='saab'] {
-  --bg: #f5f7fa;
+[data-theme='light'] {
+  --bg: #fafafa;
   --panel: #ffffff;
-  --border: #d9dee7;
-  --text: #0b1220;
-  --muted: #566173;
-
-  --primary: #0b4aa2;
-  --accent: #0b4aa2;
-  --accent-hover: #083b82;
-
-  --badge-bg: #edf1f5;
-  --badge-border: #d0d7e0;
-}
-
-:root {
-  --radius: 0px;
+  --border: #e8e8ed;
+  --text: #1d1d1f;
+  --muted: #86868b;
+  --primary: #1d1d1f;
+  --accent: #424245;
 }

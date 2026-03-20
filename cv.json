@@ -2,91 +2,90 @@
   "name": "Lucas Bateson",
   "dataTheme": "light",
   "hero": {
-    "primary": "I write software to understand how things work.",
-    "secondary": "Rust, simulations, self-hosted infrastructure. Currently building production systems at NAV IT.",
-    "tertiary": "Oslo, Norway."
+    "primary": "Software for understanding systems.",
+    "secondary": "Simulation, infrastructure, and numerical methods. Building production systems at NAV IT.",
+    "tertiary": "Oslo, Norway"
   },
   "systems": {
     "primary": [
       {
         "name": "Deadreckon",
-        "purpose": "Deterministic guidance and interception simulation under imperfect state information.",
+        "purpose": "Guidance systems under uncertainty.",
         "capabilities": [
-          "Proportional navigation guidance",
-          "Sensor noise modeling (realistic, degraded, extreme)",
-          "Monte Carlo scenario analysis with configurable sweeps"
+          "Proportional navigation under realistic sensor degradation.",
+          "Monte Carlo exploration across engagement geometries.",
+          "Real-time visualization of guidance dynamics."
         ],
-        "scope": "Rust workspace: sim_core, sim_cli, and sim_viz with real-time visualization",
-        "evidence": "Evaluated across 6 engagement scenarios with configurable noise profiles",
+        "scope": "Rust workspace with simulation core, CLI, and visualization",
+        "evidence": "Evaluated across six engagement scenarios with configurable noise profiles",
         "url": "https://github.com/Lucas8448/deadreckon"
       },
       {
-        "name": "Foundry",
-        "purpose": "Self-hosted CI/CD platform replacing GitHub Actions with full deployment automation.",
+        "name": "Propagator",
+        "purpose": "Composable state propagation for physical systems.",
         "capabilities": [
-          "GitHub webhook integration with automatic builds and PR checks",
-          "Docker container execution with workspace isolation",
-          "Automatic domain routing via Cloudflare Tunnels",
-          "Scheduled builds, secrets injection, and self-deployment"
+          "RK4 numerical integration with adaptive stepping.",
+          "Composable force pipeline — gravity, drag, thrust.",
+          "Environment and reference frame modeling."
         ],
-        "scope": "Rust backend with PostgreSQL, React/TypeScript dashboard",
-        "evidence": "Deploys itself and 6+ services to a sovereign Mac Mini M4 server",
-        "url": "https://github.com/Lucas-William-Bateson/foundry"
+        "scope": "Rust library designed as simulation substrate",
+        "evidence": "Modular architecture supporting downstream projects",
+        "url": "https://github.com/Lucas8448/propagator"
       }
     ],
     "foundational": [
       {
-        "name": "Propagator",
-        "purpose": "State propagation library for physical systems with composable force models and numerical integration.",
+        "name": "Foundry",
+        "purpose": "Self-hosted deployment, end to end.",
         "capabilities": [
-          "RK4 numerical integration",
-          "Composable force pipeline (gravity, drag, thrust)",
-          "Environment and reference frame modeling"
+          "Webhook-driven builds with automatic PR verification.",
+          "Isolated container execution per workspace.",
+          "Routes domains, manages secrets, deploys itself."
         ],
-        "scope": "Rust library designed as simulation substrate",
-        "evidence": "Modular architecture supporting downstream simulation projects",
-        "url": "https://github.com/Lucas8448/propagator"
+        "scope": "Rust backend with PostgreSQL and React dashboard",
+        "evidence": "Deploys itself and six services to a sovereign Mac Mini M4",
+        "url": "https://github.com/Lucas-William-Bateson/foundry"
       },
       {
-        "name": "N-Body Simulator",
-        "purpose": "Numerical experiment exploring integration accuracy and long-term stability in gravitational systems.",
+        "name": "N-Body",
+        "purpose": "Long-term stability in gravitational simulation.",
         "capabilities": [
           "Newtonian gravitational modeling",
           "Time-step integration",
           "Energy drift observation"
         ],
-        "scope": "Simple forward-Euler integrator",
-        "evidence": "Numerical behavior observed over extended simulation runs",
+        "scope": "Forward-Euler integrator",
+        "evidence": "Numerical behavior observed over extended runs",
         "url": "https://github.com/Lucas8448/N-body-simulator"
       },
       {
         "name": "Neural-Nets",
-        "purpose": "From-scratch exploration of neural networks as numerical approximation systems.",
+        "purpose": "Neural networks from first principles.",
         "capabilities": [
           "Manual backpropagation",
           "Gradient-based optimization",
           "Error propagation analysis"
         ],
-        "scope": "Educational implementations, not production models",
+        "scope": "Educational implementations",
         "evidence": "Training behavior observed through loss convergence",
         "url": "https://github.com/Lucas8448/neural-nets"
       },
       {
         "name": "Oxidize",
-        "purpose": "Real-time voxel engine used as a performance and data-structure experimentation platform.",
+        "purpose": "Real-time voxel rendering as a performance study.",
         "capabilities": [
           "Chunked world representation",
           "Mesh generation pipeline",
-          "Performance profiling and optimization"
+          "Performance profiling under varying world sizes"
         ],
         "scope": "Experimental engine architecture",
-        "evidence": "Performance characteristics explored under varying world sizes",
+        "evidence": "Performance characteristics explored under load",
         "url": "https://github.com/Lucas8448/oxidize"
       }
     ]
   },
   "infrastructure": {
-    "summary": "All personal services run on a Mac Mini M4, deployed through Foundry, and exposed via Cloudflare Tunnels.",
+    "summary": "All services run on a single Mac Mini M4 — deployed through Foundry, exposed through Cloudflare Tunnels.",
     "services": [
       "CI/CD (Foundry)",
       "Portfolio — l3s.me",
@@ -100,18 +99,18 @@
       "company": "NAV IT",
       "location": "Oslo, Norway",
       "time": "2024–Present",
-      "description": "Production systems with strict requirements for correctness, accessibility, and long-term maintainability in a regulated environment."
+      "description": "Production systems with strict requirements for correctness, accessibility, and long-term maintainability."
     },
     {
       "role": "Software Development Intern",
       "company": "Visma, Intility, Glasspaper",
       "time": "2023–2024",
-      "description": "Short-term placements in data analysis, cloud infrastructure, and internal tooling."
+      "description": "Data analysis, cloud infrastructure, and internal tooling across short-term placements."
     },
     {
       "role": "Programming Instructor",
       "company": "Oslo Kommune",
-      "description": "Taught programming fundamentals to children aged 8–12 through hands-on projects and visual coding environments."
+      "description": "Teaching programming to children through hands-on projects."
     }
   ],
   "education": {
