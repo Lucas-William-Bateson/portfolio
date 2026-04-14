@@ -7,9 +7,12 @@
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "ss01", "ss02", "cv01", "cv11";
+    font-variation-settings: "opsz" 20;
   }
   body {
-    @apply min-h-screen bg-bg text-text font-sans;
+    @apply min-h-screen bg-bg text-text font-sans tracking-[-0.011em];
   }
   a {
     @apply text-inherit no-underline;
