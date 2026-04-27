@@ -9,16 +9,16 @@
   "systems": {
     "primary": [
       {
-        "name": "Deadreckon",
-        "purpose": "Guidance systems under uncertainty.",
+        "name": "Oxidize",
+        "purpose": "Real-time voxel rendering as a performance study.",
         "capabilities": [
-          "Proportional navigation under realistic sensor degradation.",
-          "Monte Carlo exploration across engagement geometries.",
-          "Real-time visualization of guidance dynamics."
+          "Chunked world representation with dynamic meshing.",
+          "Mesh generation pipeline optimized for real-time updates.",
+          "Performance profiling under varying world sizes."
         ],
-        "scope": "Rust workspace with simulation core, CLI, and visualization",
-        "evidence": "Evaluated across six engagement scenarios with configurable noise profiles",
-        "url": "https://github.com/Lucas8448/deadreckon"
+        "scope": "Experimental engine architecture",
+        "evidence": "Performance characteristics explored under load",
+        "url": "https://github.com/Lucas8448/oxidize"
       },
       {
         "name": "Propagator",
@@ -71,16 +71,16 @@
         "url": "https://github.com/Lucas8448/neural-nets"
       },
       {
-        "name": "Oxidize",
-        "purpose": "Real-time voxel rendering as a performance study.",
+        "name": "Deadreckon",
+        "purpose": "Guidance systems under uncertainty.",
         "capabilities": [
-          "Chunked world representation",
-          "Mesh generation pipeline",
-          "Performance profiling under varying world sizes"
+          "Proportional navigation under realistic sensor degradation",
+          "Monte Carlo exploration across engagement geometries",
+          "Real-time visualization of guidance dynamics"
         ],
-        "scope": "Experimental engine architecture",
-        "evidence": "Performance characteristics explored under load",
-        "url": "https://github.com/Lucas8448/oxidize"
+        "scope": "Rust workspace with simulation core, CLI, and visualization",
+        "evidence": "Evaluated across six engagement scenarios with configurable noise profiles",
+        "url": "https://github.com/Lucas8448/deadreckon"
       }
     ]
   },

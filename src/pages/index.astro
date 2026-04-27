@@ -42,27 +42,18 @@ type System = {
             </div>
           </a>
 
-          {/* Deadreckon — missile intercept */}
+          {/* Oxidize — voxel rendering */}
           {i === 0 && (
-            <div id="guidance-scroll" class="relative h-[200vh] -mx-6 md:-mx-0 mt-16">
+            <div id="voxel-scroll" class="relative h-[200vh] -mx-6 md:-mx-0 mt-16">
               <div class="sticky top-[20vh] h-[60vh] flex items-center justify-center">
                 <svg
-                  id="guidance-svg"
+                  id="voxel-svg"
                   viewBox="0 0 400 240"
                   class="w-full max-w-[420px] h-auto"
                   fill="none"
                   aria-hidden="true"
                 >
-                  {/* Missile trail */}
-                  <path id="missile-trail" d="" stroke="var(--text)" stroke-width="1" stroke-linecap="round" opacity="0.15" />
-                  {/* Aircraft trail */}
-                  <path id="aircraft-trail" d="" stroke="var(--text)" stroke-width="0.5" stroke-dasharray="4 4" opacity="0.08" />
-                  {/* Aircraft dot */}
-                  <circle id="aircraft" r="3" fill="var(--text)" opacity="0" />
-                  {/* Missile dot */}
-                  <circle id="missile" r="3.5" fill="var(--text)" opacity="0" />
-                  {/* Intercept flash */}
-                  <circle id="intercept-flash" r="0" fill="var(--text)" opacity="0" />
+                  <g id="voxel-grid"></g>
                 </svg>
               </div>
             </div>
@@ -168,112 +159,90 @@ type System = {
       observer.observe(el);
     });
 
-    // ---- Deadreckon: proportional navigation intercept with evasive aircraft ----
-    function initGuidance() {
-      const section = document.getElementById('guidance-scroll');
-      const missileEl = document.getElementById('missile');
-      const aircraftEl = document.getElementById('aircraft');
-      const missileTrail = document.getElementById('missile-trail');
-      const aircraftTrail = document.getElementById('aircraft-trail');
-      const flash = document.getElementById('intercept-flash');
-      if (!section || !missileEl || !aircraftEl || !missileTrail || !aircraftTrail || !flash) return;
+    // ---- Oxidize: voxel chunk meshing and generation ----
+    function initVoxel() {
+      const section = document.getElementById('voxel-scroll');
+      const grid = document.getElementById('voxel-grid');
+      if (!section || !grid) return;
 
-      // Precompute the engagement at high resolution
-      const N = 4.5; // navigation constant
-      const dt = 0.01;
-      const missileSpeed = 260; // high speed to allow extreme curves
-      const aircraftSpeed = 130;
-      const steps: { mx: number; my: number; ax: number; ay: number }[] = [];
+      const GRID_SIZE = 16;
+      const w = 9;   // half-width
+      const h = 4.5; // half-height
+      const d = 9;   // block height
+      const ox = 200; // origin x
+      const oy = 90; // origin y
 
-      let mx = 40, my = 200, mAng = -Math.PI / 3;
-      let ax = 320, ay = 50, aAng = Math.PI * 0.8;
-      let lastLos: number | null = null;
-
-      for (let t = 0; t < 3000; t++) {
-        const time = t * dt;
-        steps.push({ mx, my, ax, ay });
-
-        // Evasive aircraft logic: S-curve (pulls one way, then breaks hard the other way)
-        let turnRate = 0;
-        if (time > 0.4 && time < 1.4) turnRate = -1.8; // bank right (upwards)
-        else if (time >= 1.4 && time < 2.6) turnRate = 2.2; // break hard left (downwards)
-
-        aAng += turnRate * dt;
-        ax += aircraftSpeed * Math.cos(aAng) * dt;
-        ay += aircraftSpeed * Math.sin(aAng) * dt;
-
-        // Proportional navigation calculation
-        const rx = ax - mx, ry = ay - my;
-        const dist = Math.sqrt(rx * rx + ry * ry);
-        if (dist < 4) break; // intercept achieved
-
-        const losAngle = Math.atan2(ry, rx);
-        if (lastLos !== null) {
-          let dLos = losAngle - lastLos;
-          // Normalize angle wrapping
-          while (dLos > Math.PI) dLos -= 2 * Math.PI;
-          while (dLos < -Math.PI) dLos += 2 * Math.PI;
-          const losRate = dLos / dt;
-
-          let cmdRate = N * losRate;
-          cmdRate = Math.max(-6, Math.min(6, cmdRate)); // G-limit to create sweeping curves
-          mAng += cmdRate * dt;
+      // Precompute terrain
+      const voxels: { x: number; y: number; z: number; svg: string }[] = [];
+      for (let x = 0; x < GRID_SIZE; x++) {
+        for (let y = 0; y < GRID_SIZE; y++) {
+          // Math-based terrain generation (pseudo-noise)
+          const height = Math.floor(
+            Math.sin(x * 0.4) * 2 + 
+            Math.cos(y * 0.5) * 2.5 + 
+            Math.sin((x + y) * 0.2) * 1.5 + 4
+          );
+          
+          const maxZ = Math.max(0, height);
+          for (let z = 0; z <= maxZ; z++) {
+            voxels.push({ x, y, z, svg: '' });
+          }
         }
-        lastLos = losAngle;
-
-        mx += missileSpeed * Math.cos(mAng) * dt;
-        my += missileSpeed * Math.sin(mAng) * dt;
-
-        if (mx < -50 || mx > 450 || my < -50 || my > 300) break; // offscreen fail/finish
       }
 
-      const total = steps.length;
+      // Sort by painter's algorithm (back to front)
+      voxels.sort((a, b) => {
+        if (a.x + a.y !== b.x + b.y) return (a.x + a.y) - (b.x + b.y);
+        if (a.z !== b.z) return a.z - b.z;
+        return a.x - b.x;
+      });
+
+      // Generate SVGs
+      voxels.forEach(v => {
+        const px = ox + (v.x - v.y) * w;
+        const py = oy + (v.x + v.y) * h - v.z * d;
+        
+        const top = `M ${px},${py - h} L ${px + w},${py} L ${px},${py + h} L ${px - w},${py} Z`;
+        const left = `M ${px - w},${py} L ${px},${py + h} L ${px},${py + h + d} L ${px - w},${py + d} Z`;
+        const right = `M ${px},${py + h} L ${px + w},${py} L ${px + w},${py + d} L ${px},${py + h + d} Z`;
+        
+        // Match minimalist aesthetic: thin strokes, var(--text) color, subtle opacity
+        v.svg = `
+          <g style="opacity: 0; transition: opacity 0.1s ease-out">
+            <path d="${left}" fill="var(--text)" fill-opacity="0.05" stroke="var(--text)" stroke-width="0.5" stroke-opacity="0.2" stroke-linejoin="round" />
+            <path d="${right}" fill="var(--text)" fill-opacity="0.12" stroke="var(--text)" stroke-width="0.5" stroke-opacity="0.2" stroke-linejoin="round" />
+            <path d="${top}" fill="var(--text)" fill-opacity="0.02" stroke="var(--text)" stroke-width="0.5" stroke-opacity="0.25" stroke-linejoin="round" />
+          </g>
+        `;
+      });
+
+      // Render to DOM
+      grid.innerHTML = voxels.map(v => v.svg).join('');
+      const voxelNodes = grid.children as HTMLCollectionOf<HTMLElement>;
+      const total = voxels.length;
+      let lastIdx = 0;
       let ticking = false;
 
       function update() {
         const rect = section!.getBoundingClientRect();
         const scrollable = rect.height - window.innerHeight;
-        const progress = Math.max(0, Math.min(1, -rect.top / scrollable));
+        // Add a slight offset so it starts building earlier and finishes before the very end
+        const progress = Math.max(0, Math.min(1, (-rect.top + window.innerHeight * 0.2) / (scrollable + window.innerHeight * 0.4)));
 
-        const idx = Math.min(total - 1, Math.floor(progress * total));
-
-        // Build continuous curves up to the current moment
-        let mPath = '';
-        let aPath = '';
-        const step = 2; // step by 2 to keep path building cheap but smooth
-        for (let i = 0; i <= idx; i += step) {
-          const s = steps[i];
-          const cmd = i === 0 ? 'M' : 'L';
-          mPath += `${cmd}${s.mx.toFixed(1)} ${s.my.toFixed(1)}`;
-          aPath += `${cmd}${s.ax.toFixed(1)} ${s.ay.toFixed(1)}`;
+        const idx = Math.min(total, Math.floor(progress * total));
+        
+        if (idx !== lastIdx) {
+          const start = Math.min(lastIdx, idx);
+          const end = Math.max(lastIdx, idx);
+          const isRevealing = idx > lastIdx;
+          
+          for (let i = start; i < end; i++) {
+            if (voxelNodes[i]) {
+              voxelNodes[i].style.opacity = isRevealing ? '1' : '0';
+            }
+          }
+          lastIdx = idx;
         }
-        // Exactly connect the final point
-        const cur = steps[idx];
-        mPath += `L${cur.mx.toFixed(1)} ${cur.my.toFixed(1)}`;
-        aPath += `L${cur.ax.toFixed(1)} ${cur.ay.toFixed(1)}`;
-
-        missileTrail!.setAttribute('d', mPath);
-        aircraftTrail!.setAttribute('d', aPath);
-
-        missileEl!.setAttribute('cx', `${cur.mx}`);
-        missileEl!.setAttribute('cy', `${cur.my}`);
-        missileEl!.style.opacity = progress > 0.005 ? '1' : '0';
-
-        aircraftEl!.setAttribute('cx', `${cur.ax}`);
-        aircraftEl!.setAttribute('cy', `${cur.ay}`);
-        aircraftEl!.style.opacity = progress > 0.005 ? '0.4' : '0';
-
-        // Flash exactly at intercept point
-        const isEnd = idx >= total - 5;
-        if (isEnd && progress > 0.01) {
-          flash!.setAttribute('cx', `${cur.mx}`);
-          flash!.setAttribute('cy', `${cur.my}`);
-          flash!.setAttribute('r', '8');
-          flash!.style.opacity = '0.15';
-        } else {
-          flash!.style.opacity = '0';
-        }
-
         ticking = false;
       }
 
@@ -383,7 +352,7 @@ type System = {
       }, { passive: true });
     }
 
-    initGuidance();
+    initVoxel();
     initPropagator();
   </script>
 
