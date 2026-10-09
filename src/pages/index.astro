@@ -20,10 +20,10 @@ type System = {
       <h1 class="text-4xl font-semibold text-text tracking-tight leading-[1.05]">
         {cv.hero.primary}
       </h1>
-      <p class="mt-8 text-[0.9375rem] text-muted/50 leading-relaxed max-w-[400px]">
+      <p class="mt-8 text-[0.9375rem] text-secondary leading-relaxed max-w-[400px]">
         {cv.hero.secondary}
       </p>
-      <p class="mt-3 text-sm text-muted/30">
+      <p class="mt-3 text-sm text-muted">
         {cv.hero.tertiary}
       </p>
     </header>
@@ -33,11 +33,11 @@ type System = {
       {cv.systems.primary.map((s: System, i: number) => (
         <article>
           <a href={s.url} target="_blank" rel="noreferrer noopener" class="group block">
-            <h2 class="text-xl font-medium text-text tracking-tight group-hover:text-text/70 transition-colors duration-500">{s.name}</h2>
-            <p class="mt-2 text-[0.9375rem] text-muted/60 leading-relaxed">{s.purpose}</p>
+            <h2 class="text-xl font-medium text-text tracking-tight group-hover:text-secondary transition-colors duration-500">{s.name}</h2>
+            <p class="mt-2 text-[0.9375rem] text-secondary leading-relaxed">{s.purpose}</p>
             <div class="mt-5 space-y-2">
               {s.capabilities.map((c: string) => (
-                <p class="text-sm text-muted/35 leading-relaxed">{c}</p>
+                <p class="text-sm text-muted leading-relaxed">{c}</p>
               ))}
             </div>
           </a>
@@ -92,15 +92,15 @@ type System = {
     <section class="mb-40 md:mb-52 space-y-8">
       {cv.systems.foundational.map((s: System) => (
         <a href={s.url} target="_blank" rel="noreferrer noopener" class="group block">
-          <span class="text-[0.9375rem] font-medium text-text/60 group-hover:text-text transition-colors duration-500">{s.name}</span>
-          <span class="text-sm text-muted/30 ml-3">{s.purpose}</span>
+          <span class="text-[0.9375rem] font-medium text-secondary group-hover:text-text transition-colors duration-500">{s.name}</span>
+          <span class="text-sm text-muted ml-3">{s.purpose}</span>
         </a>
       ))}
     </section>
 
     <!-- Infrastructure -->
     <section class="mb-40 md:mb-52">
-      <p class="text-sm text-muted/30 leading-relaxed">
+      <p class="text-sm text-muted leading-relaxed">
         {cv.infrastructure.summary}
       </p>
     </section>
@@ -110,10 +110,10 @@ type System = {
       {cv.work.map((w: { role: string; company: string; location?: string; time?: string; description: string }) => (
         <div>
           <div class="text-[0.9375rem] font-medium text-text">{w.role}</div>
-          <div class="mt-1 text-sm text-muted/35">
+          <div class="mt-1 text-sm text-muted">
             {w.company}{w.time && ` · ${w.time}`}
           </div>
-          <p class="mt-2 text-sm text-muted/30 leading-relaxed">{w.description}</p>
+          <p class="mt-2 text-sm text-secondary leading-relaxed">{w.description}</p>
         </div>
       ))}
     </section>
@@ -121,20 +121,20 @@ type System = {
     <!-- Education -->
     <section class="mb-40 md:mb-52">
       <div class="text-[0.9375rem] font-medium text-text">{cv.education.school}</div>
-      <div class="text-sm text-muted/35 mt-1">
+      <div class="text-sm text-muted mt-1">
         {cv.education.program} · {cv.education.years}
       </div>
     </section>
 
     <!-- Footer -->
     <footer>
-      <div class="flex gap-8 text-sm text-muted/30">
+      <div class="flex gap-8 text-sm text-secondary">
         {cv.links.map((l: { label: string; url: string }) => (
           <a
             href={l.url}
             target={l.url.startsWith('http') ? '_blank' : undefined}
             rel="noreferrer noopener"
-            class="hover:text-text/60 transition-colors duration-500"
+            class="hover:text-text transition-colors duration-500"
           >{l.label}</a>
         ))}
       </div>

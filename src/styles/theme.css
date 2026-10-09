@@ -4,7 +4,9 @@
   --panel: #ffffff;
   --border: #e8e8ed;
   --text: #1d1d1f;
-  --muted: #86868b;
+  --secondary: #515154;
+  --muted: #6e6e73;
+  --rule: #c7c7cc;
   --primary: #1d1d1f;
   --accent: #424245;
 }
