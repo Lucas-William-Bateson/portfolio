@@ -3,9 +3,31 @@
   "dataTheme": "light",
   "hero": {
     "primary": "Software for understanding systems.",
-    "secondary": "Simulation, infrastructure, and numerical methods. Building production systems at NAV IT.",
-    "tertiary": "Oslo, Norway"
+    "secondary": "Simulation, infrastructure, and numerical methods. Two years shipping NAV’s pension frontend, now heading into Cybernetics and Robotics at NTNU.",
+    "tertiary": "Trondheim, Norway"
   },
+  "now": {
+    "updated": "October 2026",
+    "items": [
+      "Preparatory engineering year (forkurs) at NTNU.",
+      "Building kiln, the successor to Foundry.",
+      "Extending Propagator toward guidance and navigation."
+    ]
+  },
+  "talks": [
+    {
+      "title": "Perspektiver på IT-utviklingslærlinger i offentlig sektor",
+      "lang": "nb",
+      "event": "JavaZone 2024",
+      "venue": "Oslo Spektrum",
+      "with": "Dervis Mansuroglu",
+      "summary": "Apprenticeships as a path into software development in the public sector, from the apprentice’s side and the engineering lead’s.",
+      "links": [
+        { "label": "Recording", "url": "https://vimeo.com/1006247444" },
+        { "label": "Program", "url": "https://2024.javazone.no/program/bcc32bc9-d544-4674-8a7c-3d3334c5716c" }
+      ]
+    }
+  ],
   "systems": {
     "primary": [
       {
@@ -36,7 +58,7 @@
     "foundational": [
       {
         "name": "Foundry",
-        "purpose": "Self-hosted deployment, end to end.",
+        "purpose": "Self-hosted deployment, end to end. Archived, succeeded by kiln.",
         "capabilities": [
           "Webhook-driven builds with automatic PR verification.",
           "Isolated container execution per workspace.",
@@ -85,7 +107,7 @@
     ]
   },
   "infrastructure": {
-    "summary": "All services run on a single Mac Mini M4 — deployed through Foundry, exposed through Cloudflare Tunnels.",
+    "summary": "This site builds on GitHub Actions and deploys to Cloudflare Pages.",
     "services": [
       "CI/CD (Foundry)",
       "Portfolio — l3s.me",
@@ -95,11 +117,11 @@
   },
   "work": [
     {
-      "role": "Software Developer",
+      "role": "Apprentice Software Developer",
       "company": "NAV IT",
       "location": "Oslo, Norway",
-      "time": "2024–Present",
-      "description": "Production systems with strict requirements for correctness, accessibility, and long-term maintainability."
+      "time": "2024–2026",
+      "description": "Pension frontend in production, with strict requirements for correctness, accessibility, and long-term maintainability. Completed apprenticeship with fagprøve (trade certification)."
     },
     {
       "role": "Software Development Intern",
