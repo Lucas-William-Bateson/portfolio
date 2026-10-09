@@ -23,6 +23,18 @@
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .fade-section,
+  .fade-section.visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 @layer utilities {
   .fade-section {
     opacity: 0;
