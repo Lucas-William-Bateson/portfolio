@@ -11,6 +11,13 @@ type System = {
   evidence: string;
   url: string;
 };
+
+type Now = {
+  updated: string;
+  items: string[];
+};
+
+const now: Now = cv.now;
 ---
 <BaseLayout title={cv.name} description={cv.hero.primary} theme={cv.dataTheme}>
   <main class="max-w-[580px] mx-auto px-6 pt-36 pb-24 md:pt-48 md:pb-36">
@@ -27,6 +34,17 @@ type System = {
         {cv.hero.tertiary}
       </p>
     </header>
+
+    <!-- Now -->
+    <section class="mb-40 md:mb-52">
+      <h2 class="text-xs uppercase tracking-[0.14em] text-muted">Now</h2>
+      <div class="mt-6 space-y-3">
+        {now.items.map((item) => (
+          <p class="text-[0.9375rem] text-secondary leading-relaxed">{item}</p>
+        ))}
+      </div>
+      <p class="mt-6 text-xs text-muted">Updated {now.updated}</p>
+    </section>
 
     <!-- Primary projects -->
     <section class="mb-40 md:mb-52 space-y-28">
