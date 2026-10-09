@@ -135,11 +135,10 @@
       "description": "Teaching programming to children through hands-on projects."
     }
   ],
-  "education": {
-    "school": "Fyrstikkalleen VGS",
-    "program": "Information Technology and Media Production",
-    "years": "2022–2024"
-  },
+  "education": [
+    { "school": "NTNU", "program": "Preparatory engineering year (forkurs)", "years": "2026–2027" },
+    { "school": "Fyrstikkalleen VGS", "program": "Information Technology and Media Production", "years": "2022–2024" }
+  ],
   "links": [
     { "label": "GitHub", "url": "https://github.com/Lucas8448" },
     { "label": "Notes", "url": "https://notes.l3s.me" },

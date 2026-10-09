@@ -32,8 +32,15 @@ type Talk = {
   links: Link[];
 };
 
+type Education = {
+  school: string;
+  program: string;
+  years: string;
+};
+
 const now: Now = cv.now;
 const talks: Talk[] = cv.talks;
+const education: Education[] = cv.education;
 ---
 <BaseLayout title={cv.name} description={cv.hero.primary} theme={cv.dataTheme}>
   <main class="max-w-[580px] mx-auto px-6 pt-36 pb-24 md:pt-48 md:pb-36">
@@ -181,11 +188,15 @@ const talks: Talk[] = cv.talks;
     </section>
 
     <!-- Education -->
-    <section class="mb-40 md:mb-52">
-      <div class="text-[0.9375rem] font-medium text-text">{cv.education.school}</div>
-      <div class="text-sm text-muted mt-1">
-        {cv.education.program} · {cv.education.years}
-      </div>
+    <section class="mb-40 md:mb-52 space-y-10">
+      {education.map((e) => (
+        <div>
+          <div class="text-[0.9375rem] font-medium text-text">{e.school}</div>
+          <div class="text-sm text-muted mt-1">
+            {e.program} · {e.years}
+          </div>
+        </div>
+      ))}
     </section>
 
     <!-- Footer -->
