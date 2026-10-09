@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import CommandPalette from '../components/CommandPalette.astro';
 import cv from '../../cv.json';
 
 type System = {
@@ -451,12 +450,4 @@ const education: Education[] = cv.education;
     initPropagator();
   </script>
 
-  <CommandPalette actions={[
-    ...cv.links.map((l: { label: string; url: string }, i: number) => ({
-      id: `link-${i}`,
-      title: l.label,
-      handler: l.url,
-      section: 'Links',
-    })),
-  ]} />
 </BaseLayout>
