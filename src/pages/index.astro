@@ -17,7 +17,23 @@ type Now = {
   items: string[];
 };
 
+type Link = {
+  label: string;
+  url: string;
+};
+
+type Talk = {
+  title: string;
+  lang?: string;
+  event: string;
+  venue: string;
+  with?: string;
+  summary: string;
+  links: Link[];
+};
+
 const now: Now = cv.now;
+const talks: Talk[] = cv.talks;
 ---
 <BaseLayout title={cv.name} description={cv.hero.primary} theme={cv.dataTheme}>
   <main class="max-w-[580px] mx-auto px-6 pt-36 pb-24 md:pt-48 md:pb-36">
@@ -44,6 +60,34 @@ const now: Now = cv.now;
         ))}
       </div>
       <p class="mt-6 text-xs text-muted">Updated {now.updated}</p>
+    </section>
+
+    <!-- Talks -->
+    <section class="mb-40 md:mb-52">
+      <h2 class="text-xs uppercase tracking-[0.14em] text-muted">Talks</h2>
+      <div class="mt-6 space-y-16">
+        {talks.map((t) => (
+          <article>
+            <h3 lang={t.lang} class="text-lg font-medium text-text tracking-tight">{t.title}</h3>
+            <p class="mt-2 text-sm text-muted">
+              {t.event} · {t.venue}{t.with && ` · with ${t.with}`}
+            </p>
+            <p class="mt-4 text-[0.9375rem] text-secondary leading-relaxed">{t.summary}</p>
+            <div class="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm text-secondary">
+              {t.links.map((l) => (
+                <a
+                  href={l.url}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  class="underline underline-offset-4 decoration-rule hover:text-text transition-colors duration-500"
+                >
+                  {l.label}
+                </a>
+              ))}
+            </div>
+          </article>
+        ))}
+      </div>
     </section>
 
     <!-- Primary projects -->
