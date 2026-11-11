@@ -4,7 +4,6 @@
 
 @layer base {
   html {
-    scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
@@ -20,7 +19,7 @@
     outline-offset: 2px;
   }
   ::selection {
-    background-color: var(--ember);
+    background-color: var(--text);
     color: var(--bg);
   }
 }
@@ -28,7 +27,7 @@
 @layer components {
   .ix-container {
     width: 100%;
-    max-width: 1280px;
+    max-width: 1200px;
     margin-inline: auto;
     padding-inline: 1.5rem;
   }
@@ -40,12 +39,16 @@
 
   /* Type styles, after Interstage. Uppercase comes from the style, never the source. */
   .t-display-xl {
-    font-size: clamp(3rem, 13.2vw, 12rem);
-    line-height: 0.86;
+    font-size: clamp(2.75rem, 10.5vw, 8.5rem);
+    line-height: 0.9;
     font-weight: 700;
     letter-spacing: -0.015em;
     font-stretch: 125%;
     text-transform: uppercase;
+  }
+  .t-lead-xl {
+    font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+    line-height: 1.4;
   }
   .t-display {
     font-size: clamp(2.25rem, 5vw, 3.5rem);
@@ -56,15 +59,15 @@
     text-transform: uppercase;
   }
   .t-title {
-    font-size: clamp(1.5rem, 2.6vw, 2rem);
-    line-height: 1.1;
+    font-size: 1.125rem;
+    line-height: 1.2;
     font-weight: 600;
-    letter-spacing: 0.01em;
+    letter-spacing: 0.04em;
     font-stretch: 118%;
     text-transform: uppercase;
   }
   .t-heading {
-    font-size: 1.25rem;
+    font-size: 1.125rem;
     line-height: 1.35;
     font-weight: 600;
     font-stretch: 108%;
@@ -100,153 +103,10 @@
     color: var(--ember);
     text-decoration-color: currentColor;
   }
-
-  /* Hairline list row: fills on hover, title steps right, arrow turns ember. */
-  .ix-row {
-    display: block;
-    border-top: 1px solid var(--border);
-    transition: background-color 160ms;
-  }
-  .ix-row:hover {
-    background-color: var(--panel);
-  }
-  .ix-row .ix-row__shift {
-    transition: transform 400ms var(--ease);
-  }
-  .ix-row:hover .ix-row__shift {
-    transform: translateX(12px);
-  }
-  .ix-arrow {
-    display: inline-block;
-    color: var(--muted);
-    transition:
-      color 160ms,
-      transform 400ms var(--ease);
-  }
-  a:hover .ix-arrow,
-  .group:hover .ix-arrow {
-    color: var(--ember);
-    transform: translate(3px, -3px);
-  }
-
-  /* Hero */
-  .hero-glow {
-    position: absolute;
-    inset: auto 0 0 0;
-    height: 70%;
-    pointer-events: none;
-    background: radial-gradient(
-      ellipse 70% 60% at 50% 115%,
-      rgba(255, 107, 44, 0.2),
-      rgba(255, 107, 44, 0.05) 45%,
-      transparent 72%
-    );
-  }
-  .name-line {
-    display: block;
-    overflow: hidden;
-    padding-top: 0.04em;
-  }
-  .name-ch {
-    display: inline-block;
-    transform: translateY(110%);
-    animation: rise 1.1s var(--ease) forwards;
-    animation-delay: calc(150ms + var(--i) * 45ms);
-  }
-  .hero-in {
-    opacity: 0;
-    transform: translateY(16px);
-    animation: fade-up 0.9s var(--ease) forwards;
-    animation-delay: calc(700ms + var(--i, 0) * 110ms);
-  }
-  /* Fixed chrome */
-  .progress {
-    position: fixed;
-    inset: 0 0 auto 0;
-    height: 2px;
-    background: var(--ember);
-    transform: scaleX(0);
-    transform-origin: left;
-    z-index: 50;
-    pointer-events: none;
-  }
-  .reticle {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 28px;
-    height: 28px;
-    margin: -14px 0 0 -14px;
-    border: 1px solid var(--ember);
-    pointer-events: none;
-    z-index: 60;
-    opacity: 0;
-    transition:
-      width 250ms var(--ease),
-      height 250ms var(--ease),
-      margin 250ms var(--ease),
-      opacity 250ms;
-  }
-  .reticle.on {
-    opacity: 0.9;
-  }
-  .reticle.hot {
-    width: 56px;
-    height: 56px;
-    margin: -28px 0 0 -28px;
-  }
-}
-
-@keyframes rise {
-  to {
-    transform: translateY(0);
-  }
-}
-@keyframes fade-up {
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-/* Scroll reveals. Only armed when JS is running (html.js), so content never hides without it. */
-.js [data-reveal] {
-  opacity: 0;
-  transform: translateY(28px);
-  transition:
-    opacity 0.9s var(--ease),
-    transform 0.9s var(--ease);
-  transition-delay: var(--d, 0ms);
-}
-.js [data-reveal='rule'] {
-  opacity: 1;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 1.3s var(--ease);
-}
-.js [data-reveal].in {
-  opacity: 1;
-  transform: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  .name-ch,
-  .hero-in,
-  .js [data-reveal],
-  .js [data-reveal='rule'] {
-    opacity: 1;
-    transform: none;
-    animation: none;
+  .ix-link {
     transition: none;
-  }
-  .ix-row .ix-row__shift,
-  .ix-arrow {
-    transition: none;
-  }
-  .reticle,
-  .progress {
-    display: none;
   }
 }
