@@ -53,70 +53,60 @@ const work: Work[] = cv.work;
 const education: Education[] = cv.education;
 const links: Link[] = cv.links;
 
-const nameLines = cv.name.split(' ');
-const lineOffsets = nameLines.map((_, i) => nameLines.slice(0, i).join('').length);
 const email = links.find((l) => l.url.startsWith('mailto:'))?.url.replace('mailto:', '');
 const year = new Date().getFullYear();
-const pad = (n: number) => String(n).padStart(2, '0');
 ---
 <BaseLayout title={cv.name} description={cv.hero.secondary} theme={cv.dataTheme}>
-  <div class="progress" id="progress" aria-hidden="true"></div>
-  <div class="reticle" id="reticle" aria-hidden="true"></div>
 
   <!-- Hero -->
-  <header id="hero" class="relative min-h-[100svh] flex flex-col overflow-hidden">
+  <header id="hero" class="relative overflow-hidden">
     <canvas id="field" class="absolute inset-0 w-full h-full" aria-hidden="true"></canvas>
-    <div class="hero-glow" aria-hidden="true"></div>
-
-    <div class="ix-container relative z-10 flex items-center justify-between h-[72px] hero-in">
+    <div class="ix-container relative pt-16 md:pt-28 pb-10 md:pb-16">
       <p class="t-label text-secondary">{cv.hero.tertiary}</p>
-    </div>
-
-    <div id="hero-body" class="ix-container relative z-10 mt-auto pb-8 md:pb-12">
-      <h1 class="t-display-xl">
-        <span class="sr-only">{cv.name}</span>
-        {nameLines.map((line, li) => (
-          <span class="name-line" aria-hidden="true">
-            {[...line].map((ch, ci) => (
-              <span class="name-ch" style={`--i:${lineOffsets[li] + ci}`}>{ch}</span>
+      <h1 class="t-display-xl mt-5">{cv.name}</h1>
+      <div class="grid md:grid-cols-12 gap-x-6 gap-y-10 mt-10 md:mt-14 items-end">
+        <div class="md:col-span-7">
+          <p class="t-lead-xl text-text max-w-[640px]">{cv.hero.secondary}</p>
+          <nav aria-label="Links" class="mt-8 flex flex-wrap gap-x-8 gap-y-3 t-label text-secondary">
+            {links.map((l) => (
+              <a
+                href={l.url}
+                target={l.url.startsWith('http') ? '_blank' : undefined}
+                rel="noreferrer noopener"
+                class="ix-link"
+              >{l.label}</a>
             ))}
-          </span>
-        ))}
-      </h1>
-
-      <div class="mt-8 md:mt-12 hero-in" style="--i:1">
-        <p class="t-title text-text">{cv.hero.primary}</p>
-        <p class="mt-4 t-lead text-secondary max-w-[560px]">{cv.hero.secondary}</p>
+          </nav>
+        </div>
+        <figure class="md:col-span-5 md:justify-self-end">
+          <img
+            src="/avatar.jpeg"
+            alt={`${cv.name}, portrait`}
+            width="784"
+            height="1000"
+            class="w-full max-w-[340px] aspect-[4/5] object-cover"
+          />
+        </figure>
       </div>
-
-      <div class="mt-8 md:mt-12 pt-4 border-t border-border flex flex-wrap items-center justify-between gap-x-8 gap-y-3 hero-in" style="--i:2">
-        <nav aria-label="Links" class="flex flex-wrap gap-x-8 gap-y-2 t-label text-secondary">
-          {links.map((l) => (
-            <a
-              href={l.url}
-              target={l.url.startsWith('http') ? '_blank' : undefined}
-              rel="noreferrer noopener"
-              class="hover:text-ember transition-colors duration-150"
-            >{l.label}{l.url.startsWith('http') && <span class="ix-arrow ml-1" aria-hidden="true">↗</span>}</a>
-          ))}
-        </nav>
-      </div>
+      <p class="mt-8 t-data text-muted">
+        Behind the name: three bodies on a figure-eight orbit, integrated live in your browser.
+      </p>
     </div>
   </header>
 
   <main class="ix-container pb-24 md:pb-32">
 
     <!-- Work -->
-    <section id="work" class="pt-24 md:pt-32">
-      <SectionHead index="01" title="Work" />
-      <div class="mt-6 md:mt-8">
+    <section id="work" class="pt-20 md:pt-28">
+      <SectionHead title="Work" />
+      <div class="mt-4">
         {work.map((w, i) => (
-          <div class:list={['grid md:grid-cols-12 gap-x-6 gap-y-2 py-7 md:py-9', i > 0 && 'border-t border-border']} data-reveal>
+          <div class:list={['grid md:grid-cols-12 gap-x-6 gap-y-2 py-7', i > 0 && 'border-t border-border']}>
             <p class="md:col-span-3 t-data text-muted">{w.time}</p>
             <div class="md:col-span-9">
               <h3 class="t-heading text-text">{w.role}</h3>
-              <p class="mt-1 t-label text-secondary">{w.company}</p>
-              <p class="mt-4 text-secondary max-w-[680px]">{w.description}</p>
+              <p class="mt-1 text-secondary">{w.company}</p>
+              <p class="mt-3 text-secondary max-w-[680px]">{w.description}</p>
             </div>
           </div>
         ))}
@@ -124,23 +114,21 @@ const pad = (n: number) => String(n).padStart(2, '0');
     </section>
 
     <!-- Talks -->
-    <section id="talks" class="pt-24 md:pt-32">
-      <SectionHead index="02" title="Talks" />
-      <div class="mt-10 md:mt-14 space-y-16">
-        {talks.map((t) => (
-          <article class="grid md:grid-cols-12 gap-x-6 gap-y-3" data-reveal>
+    <section id="talks" class="pt-20 md:pt-28">
+      <SectionHead title="Talks" />
+      <div class="mt-4">
+        {talks.map((t, i) => (
+          <article class:list={['grid md:grid-cols-12 gap-x-6 gap-y-2 py-7', i > 0 && 'border-t border-border']}>
             <p class="md:col-span-3 t-data text-muted">
               {t.event}<br />{t.venue}{t.with && <Fragment><br />with {t.with}</Fragment>}
             </p>
             <div class="md:col-span-9">
-              <h3 lang={t.lang} class="text-2xl md:text-3xl font-semibold text-text max-w-[760px]">{t.title}</h3>
-              {t.summary && <p class="mt-4 text-secondary max-w-[680px]">{t.summary}</p>}
+              <h3 lang={t.lang} class="t-heading text-text max-w-[680px]">{t.title}</h3>
+              {t.summary && <p class="mt-3 text-secondary max-w-[680px]">{t.summary}</p>}
               {t.links.length > 0 && (
-                <div class="mt-5 flex flex-wrap gap-x-8 gap-y-2 t-label text-secondary">
+                <div class="mt-4 flex flex-wrap gap-x-8 gap-y-2 text-secondary">
                   {t.links.map((l) => (
-                    <a href={l.url} target="_blank" rel="noreferrer noopener" class="ix-link">
-                      {l.label}<span class="ix-arrow ml-1" aria-hidden="true">↗</span>
-                    </a>
+                    <a href={l.url} target="_blank" rel="noreferrer noopener" class="ix-link">{l.label}</a>
                   ))}
                 </div>
               )}
@@ -151,86 +139,50 @@ const pad = (n: number) => String(n).padStart(2, '0');
     </section>
 
     <!-- Projects -->
-    <section id="projects" class="pt-24 md:pt-32">
-      <SectionHead index="03" title="Projects" />
+    <section id="projects" class="pt-20 md:pt-28">
+      <SectionHead title="Projects" />
       <div class="mt-4">
-      {cv.systems.primary.map((s: System) => (
-        s.name === 'Oxidize' ? (
-          <article id="voxel-scroll" class="relative h-[160vh]">
-            <div class="sticky top-[10vh] lg:top-[14vh] grid lg:grid-cols-12 gap-x-6 gap-y-6 items-center lg:min-h-[72vh]">
-              <div class="lg:col-span-5 relative group">
-                <h3 class="t-display !text-[clamp(2rem,3.6vw,3rem)] whitespace-nowrap">
-                  <a href={s.url} target="_blank" rel="noreferrer noopener" class="after:absolute after:inset-0">
-                    {s.name}<span class="ix-arrow ml-3" aria-hidden="true">↗</span>
-                  </a>
-                </h3>
-                <p class="mt-4 t-lead text-secondary">{s.purpose}</p>
-                <ul class="mt-6">
-                  {s.capabilities.map((c: string) => (
-                    <li class="border-t border-border py-2.5 text-sm text-secondary">{c}</li>
-                  ))}
-                </ul>
-              </div>
-              <div class="lg:col-span-7 flex items-center justify-center">
-                <svg id="voxel-svg" viewBox="0 0 400 240" class="w-full max-w-[680px] h-auto" fill="none" aria-hidden="true">
-                  <g id="voxel-grid"></g>
-                </svg>
-              </div>
-            </div>
-          </article>
-        ) : (
-          <article class="grid lg:grid-cols-12 gap-x-6 gap-y-6 py-16 md:py-24" data-reveal>
-            <div class="lg:col-span-5 relative group">
-              <h3 class="t-display !text-[clamp(2rem,3.6vw,3rem)] whitespace-nowrap">
-                <a href={s.url} target="_blank" rel="noreferrer noopener" class="after:absolute after:inset-0">
-                  {s.name}<span class="ix-arrow ml-3" aria-hidden="true">↗</span>
-                </a>
+        {cv.systems.primary.map((s: System, i: number) => (
+          <article class:list={['grid md:grid-cols-12 gap-x-6 gap-y-2 py-7', i > 0 && 'border-t border-border']}>
+            <p class="md:col-span-3 t-data text-muted">{s.scope}</p>
+            <div class="md:col-span-9">
+              <h3 class="t-heading text-text">
+                <a href={s.url} target="_blank" rel="noreferrer noopener" class="ix-link">{s.name}</a>
               </h3>
-              <p class="mt-4 t-lead text-secondary">{s.purpose}</p>
-              <p class="mt-4 t-data text-muted">{s.scope}</p>
+              <p class="mt-3 text-secondary max-w-[680px]">{s.purpose}</p>
+              <ul class="mt-3 max-w-[680px] list-disc pl-5 space-y-1 text-secondary">
+                {s.capabilities.map((c: string) => (<li>{c}</li>))}
+              </ul>
+              <p class="mt-3 text-text max-w-[680px]">{s.evidence}</p>
             </div>
-            <ul class="lg:col-span-7 lg:pt-2">
-              {s.capabilities.map((c: string) => (
-                <li class="border-t border-border py-4 text-secondary">{c}</li>
-              ))}
-              <li class="border-t border-border py-4 text-text">{s.evidence}</li>
-            </ul>
           </article>
-        )
-      ))}
-      </div>
+        ))}
 
-      <!-- Secondary projects + infrastructure -->
-      <div class="mt-16 md:mt-24 border-b border-border">
-        <h3 class="sr-only">More projects</h3>
-        {cv.systems.foundational.map((s: System, i: number) => (
-          <div data-reveal style={`--d:${i * 70}ms`}>
-            <a href={s.url} target="_blank" rel="noreferrer noopener" class="ix-row group">
-              <span class="ix-row__shift grid md:grid-cols-12 gap-x-6 gap-y-1 items-baseline py-5 md:py-6">
-                <span class="md:col-span-3 t-heading uppercase text-text">{s.name}</span>
-                <span class="md:col-span-5 text-secondary">{s.purpose}</span>
-                <span class="md:col-span-3 t-data text-muted">{s.scope}</span>
-                <span class="md:col-span-1 md:text-right hidden md:block"><span class="ix-arrow" aria-hidden="true">↗</span></span>
-              </span>
-            </a>
+        {/* Smaller projects */}
+        {cv.systems.foundational.map((s: System) => (
+          <div class="grid md:grid-cols-12 gap-x-6 gap-y-1 py-5 border-t border-border">
+            <p class="md:col-span-3 t-data text-muted">{s.scope}</p>
+            <p class="md:col-span-9 text-secondary max-w-[680px]">
+              <a href={s.url} target="_blank" rel="noreferrer noopener" class="ix-link text-text font-semibold">{s.name}</a>. {s.purpose}
+            </p>
           </div>
         ))}
       </div>
       {/* TODO(Lucas): add kiln as a foundational entry in cv.json once the repo URL is known. */}
-      <p class="mt-6 t-data text-muted" data-reveal>{cv.infrastructure.summary}</p>
+      <p class="mt-6 t-data text-muted">{cv.infrastructure.summary}</p>
     </section>
 
     <!-- Education -->
-    <section id="education" class="pt-24 md:pt-32">
-      <SectionHead index="04" title="Education" />
-      <div class="mt-6 md:mt-8">
+    <section id="education" class="pt-20 md:pt-28">
+      <SectionHead title="Education" />
+      <div class="mt-4">
         {education.map((e, i) => (
-          <div class:list={['grid md:grid-cols-12 gap-x-6 gap-y-2 py-7 md:py-9', i > 0 && 'border-t border-border']} data-reveal>
+          <div class:list={['grid md:grid-cols-12 gap-x-6 gap-y-2 py-7', i > 0 && 'border-t border-border']}>
             <p class="md:col-span-3 t-data text-muted">{e.years}</p>
             <div class="md:col-span-9">
               <h3 class="t-heading text-text">{e.school}</h3>
               <p class="mt-1 text-secondary">{e.program}</p>
-              {e.result && <p class="mt-2 t-data text-text">{e.result}</p>}
+              {e.result && <p class="mt-2 text-text">{e.result}</p>}
             </div>
           </div>
         ))}
@@ -238,119 +190,32 @@ const pad = (n: number) => String(n).padStart(2, '0');
     </section>
 
     <!-- Now -->
-    <section id="now" class="pt-24 md:pt-32">
-      <SectionHead index="05" title="Now" meta={`Updated ${now.updated}`} />
-      <div class="grid md:grid-cols-12 gap-x-6 gap-y-10 mt-10 md:mt-14">
-        <figure class="md:col-span-3" data-reveal>
-          <img
-            src="/avatar.jpeg"
-            alt={`${cv.name}, portrait`}
-            width="784"
-            height="1000"
-            loading="lazy"
-            class="w-full max-w-[260px] aspect-[4/5] object-cover"
-          />
-        </figure>
-        <ol class="md:col-span-9">
-          {now.items.map((item, i) => (
-            <li class="grid grid-cols-[3rem_1fr] items-baseline border-t border-border py-6 md:py-8 first:border-t-0 first:pt-0" data-reveal style={`--d:${i * 90}ms`}>
-              <span class="t-data text-muted" aria-hidden="true">{pad(i + 1)}</span>
-              <p class="text-2xl md:text-3xl font-medium text-text max-w-[760px]">{item}</p>
-            </li>
-          ))}
-        </ol>
+    <section id="now" class="pt-20 md:pt-28">
+      <SectionHead title="Now" meta={`Updated ${now.updated}`} />
+      <div class="grid md:grid-cols-12 gap-x-6 mt-8">
+        <ul class="md:col-start-4 md:col-span-9 max-w-[680px] list-disc pl-5 space-y-2 text-secondary">
+          {now.items.map((item) => (<li>{item}</li>))}
+        </ul>
       </div>
     </section>
 
     <!-- Contact -->
-    <footer id="contact" class="pt-24 md:pt-32">
-      <SectionHead index="06" title="Contact" />
-      {email && (
-        <p class="mt-10 md:mt-16" data-reveal>
-          <a
-            href={`mailto:${email}`}
-            class="group inline-block font-semibold text-text hover:text-ember transition-colors duration-150 break-all text-[clamp(1.25rem,5.4vw,4.75rem)] leading-[1.05] tracking-[-0.02em]"
-          >{email}</a>
-        </p>
-      )}
-      {cv.contact?.note && (
-        <p class="mt-6 md:mt-8 t-lead text-secondary max-w-[680px]" data-reveal>{cv.contact.note}</p>
-      )}
-      <div class="mt-12 md:mt-20 pt-4 border-t border-border flex flex-wrap items-baseline justify-between gap-x-8 gap-y-3" data-reveal>
-        <nav aria-label="Footer links" class="flex flex-wrap gap-x-8 gap-y-2 t-label text-secondary">
-          {links.map((l) => (
-            <a
-              href={l.url}
-              target={l.url.startsWith('http') ? '_blank' : undefined}
-              rel="noreferrer noopener"
-              class="hover:text-ember transition-colors duration-150"
-            >{l.label}{l.url.startsWith('http') && <span class="ix-arrow ml-1" aria-hidden="true">↗</span>}</a>
-          ))}
-        </nav>
-        <p class="t-data text-muted">{cv.name} · {cv.hero.tertiary} · {year}</p>
+    <footer id="contact" class="pt-20 md:pt-28">
+      <SectionHead title="Contact" />
+      <div class="grid md:grid-cols-12 gap-x-6 mt-8">
+        <div class="md:col-start-4 md:col-span-9 max-w-[680px]">
+          {email && (
+            <p class="t-lead"><a href={`mailto:${email}`} class="ix-link text-text">{email}</a></p>
+          )}
+          {cv.contact?.note && <p class="mt-3 text-secondary">{cv.contact.note}</p>}
+        </div>
       </div>
+      <p class="mt-16 md:mt-24 pt-4 border-t border-border t-data text-muted">{cv.name} · {cv.hero.tertiary} · {year}</p>
     </footer>
   </main>
 
   <script>
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    // ---- Scroll reveals ----
-    const revealObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('in');
-            revealObserver.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0, rootMargin: '0px 0px -8% 0px' }
-    );
-    document.querySelectorAll('[data-reveal]').forEach((el) => revealObserver.observe(el));
-
-    // ---- Scroll progress hairline and hero drift ----
-    function initScrollChrome() {
-      const bar = document.getElementById('progress');
-      const heroBody = document.getElementById('hero-body');
-      if (!bar || reduced) return;
-      let ticking = false;
-      function update() {
-        const max = document.documentElement.scrollHeight - window.innerHeight;
-        bar!.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`;
-        if (heroBody) {
-          const p = Math.min(1, window.scrollY / window.innerHeight);
-          heroBody.style.transform = `translateY(${(p * 80).toFixed(1)}px)`;
-          heroBody.style.opacity = `${Math.max(0, 1 - p * 1.4).toFixed(3)}`;
-        }
-        ticking = false;
-      }
-      window.addEventListener('scroll', () => {
-        if (!ticking) { requestAnimationFrame(update); ticking = true; }
-      }, { passive: true });
-      update();
-    }
-
-    // ---- Cursor reticle (mouse only) ----
-    function initReticle() {
-      const el = document.getElementById('reticle');
-      if (!el || reduced || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-      let tx = 0, ty = 0, x = 0, y = 0, running = false;
-      function frame() {
-        x += (tx - x) * 0.2;
-        y += (ty - y) * 0.2;
-        el!.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px)`;
-        if (Math.abs(tx - x) + Math.abs(ty - y) > 0.2) requestAnimationFrame(frame);
-        else running = false;
-      }
-      window.addEventListener('mousemove', (e) => {
-        tx = e.clientX; ty = e.clientY;
-        if (!el.classList.contains('on')) { x = tx; y = ty; el.classList.add('on'); }
-        el.classList.toggle('hot', !!(e.target as Element).closest?.('a, button'));
-        if (!running) { running = true; requestAnimationFrame(frame); }
-      }, { passive: true });
-      document.documentElement.addEventListener('mouseleave', () => el.classList.remove('on'));
-    }
 
     // ---- Hero: three equal masses on the figure-eight orbit (Chenciner & Montgomery), G = m = 1 ----
     function initField() {
@@ -401,7 +266,6 @@ const pad = (n: number) => String(n).padStart(2, '0');
 
       const trails: number[][] = [[], [], []];
       let w = 0, h = 0, dpr = 1, cx = 0, cy = 0, scale = 1;
-      let mx = 0, my = 0, ox = 0, oy = 0; // pointer offset, eased
 
       function resize() {
         const rect = canvas!.getBoundingClientRect();
@@ -410,8 +274,8 @@ const pad = (n: number) => String(n).padStart(2, '0');
         canvas!.width = Math.round(w * dpr);
         canvas!.height = Math.round(h * dpr);
         cx = w * 0.5;
-        cy = h * 0.3;
-        scale = Math.min(w * 0.4, h * 0.7);
+        cy = h * 0.5;
+        scale = Math.min(w * 0.42, h * 1.1);
       }
 
       function draw() {
@@ -428,11 +292,11 @@ const pad = (n: number) => String(n).padStart(2, '0');
             const from = Math.floor((k / BANDS) * n);
             const to = Math.min(n - 1, Math.floor(((k + 1) / BANDS) * n));
             if (to <= from) continue;
-            ctx!.globalAlpha = 0.04 + 0.8 * Math.pow((k + 1) / BANDS, 2);
+            ctx!.globalAlpha = 0.03 + 0.55 * Math.pow((k + 1) / BANDS, 2);
             ctx!.beginPath();
-            ctx!.moveTo(cx + ox + t[from * 2] * scale, cy + oy + t[from * 2 + 1] * scale);
+            ctx!.moveTo(cx + t[from * 2] * scale, cy + t[from * 2 + 1] * scale);
             for (let i = from + 1; i <= to; i++) {
-              ctx!.lineTo(cx + ox + t[i * 2] * scale, cy + oy + t[i * 2 + 1] * scale);
+              ctx!.lineTo(cx + t[i * 2] * scale, cy + t[i * 2 + 1] * scale);
             }
             ctx!.stroke();
           }
@@ -441,7 +305,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
         ctx!.fillStyle = INK;
         for (let b = 0; b < 3; b++) {
           ctx!.beginPath();
-          ctx!.arc(cx + ox + px[b] * scale, cy + oy - py[b] * scale, 3.5, 0, Math.PI * 2);
+          ctx!.arc(cx + px[b] * scale, cy - py[b] * scale, 3.5, 0, Math.PI * 2);
           ctx!.fill();
         }
       }
@@ -479,8 +343,6 @@ const pad = (n: number) => String(n).padStart(2, '0');
         const steps = Math.max(1, Math.round((elapsed * SIM_RATE) / DT));
         for (let s = 0; s < steps; s++) step();
         record();
-        ox += (mx - ox) * 0.05;
-        oy += (my - oy) * 0.05;
         draw();
         raf = requestAnimationFrame(frame);
       }
@@ -495,110 +357,10 @@ const pad = (n: number) => String(n).padStart(2, '0');
         if (visible) start();
       }).observe(hero);
       document.addEventListener('visibilitychange', () => { if (!document.hidden) start(); });
-      hero.addEventListener('mousemove', (e) => {
-        mx = (e.clientX / w - 0.5) * -36;
-        my = (e.clientY / h - 0.5) * -24;
-      }, { passive: true });
       start();
     }
 
-    // ---- Oxidize: voxel chunk meshing and generation ----
-    function initVoxel() {
-      const section = document.getElementById('voxel-scroll');
-      const grid = document.getElementById('voxel-grid');
-      if (!section || !grid) return;
-
-      const GRID_SIZE = 16;
-      const w = 9;   // half-width
-      const h = 4.5; // half-height
-      const d = 9;   // block height
-      const ox = 200; // origin x
-      const oy = 90; // origin y
-
-      // Precompute terrain
-      const voxels: { x: number; y: number; z: number; svg: string }[] = [];
-      for (let x = 0; x < GRID_SIZE; x++) {
-        for (let y = 0; y < GRID_SIZE; y++) {
-          // Math-based terrain generation (pseudo-noise)
-          const height = Math.floor(
-            Math.sin(x * 0.4) * 2 + 
-            Math.cos(y * 0.5) * 2.5 + 
-            Math.sin((x + y) * 0.2) * 1.5 + 4
-          );
-          
-          const maxZ = Math.max(0, height);
-          for (let z = 0; z <= maxZ; z++) {
-            voxels.push({ x, y, z, svg: '' });
-          }
-        }
-      }
-
-      // Sort by painter's algorithm (back to front)
-      voxels.sort((a, b) => {
-        if (a.x + a.y !== b.x + b.y) return (a.x + a.y) - (b.x + b.y);
-        if (a.z !== b.z) return a.z - b.z;
-        return a.x - b.x;
-      });
-
-      // Generate SVGs
-      voxels.forEach(v => {
-        const px = ox + (v.x - v.y) * w;
-        const py = oy + (v.x + v.y) * h - v.z * d;
-        
-        const top = `M ${px},${py - h} L ${px + w},${py} L ${px},${py + h} L ${px - w},${py} Z`;
-        const left = `M ${px - w},${py} L ${px},${py + h} L ${px},${py + h + d} L ${px - w},${py + d} Z`;
-        const right = `M ${px},${py + h} L ${px + w},${py} L ${px + w},${py + d} L ${px},${py + h + d} Z`;
-        
-        // Match minimalist aesthetic: thin strokes, var(--text) color, subtle opacity
-        v.svg = `
-          <g style="opacity: 0; transition: opacity 0.1s ease-out">
-            <path d="${left}" fill="var(--text)" fill-opacity="0.05" stroke="var(--text)" stroke-width="0.5" stroke-opacity="0.2" stroke-linejoin="round" />
-            <path d="${right}" fill="var(--text)" fill-opacity="0.12" stroke="var(--text)" stroke-width="0.5" stroke-opacity="0.2" stroke-linejoin="round" />
-            <path d="${top}" fill="var(--text)" fill-opacity="0.02" stroke="var(--text)" stroke-width="0.5" stroke-opacity="0.25" stroke-linejoin="round" />
-          </g>
-        `;
-      });
-
-      // Render to DOM
-      grid.innerHTML = voxels.map(v => v.svg).join('');
-      const voxelNodes = grid.children as HTMLCollectionOf<HTMLElement>;
-      const total = voxels.length;
-      let lastIdx = 0;
-      let ticking = false;
-
-      function update() {
-        const rect = section!.getBoundingClientRect();
-        const scrollable = rect.height - window.innerHeight;
-        // Add a slight offset so it starts building earlier and finishes before the very end
-        const progress = Math.max(0, Math.min(1, (-rect.top + window.innerHeight * 0.2) / (scrollable + window.innerHeight * 0.4)));
-
-        const idx = Math.min(total, Math.floor(progress * total));
-        
-        if (idx !== lastIdx) {
-          const start = Math.min(lastIdx, idx);
-          const end = Math.max(lastIdx, idx);
-          const isRevealing = idx > lastIdx;
-          
-          for (let i = start; i < end; i++) {
-            if (voxelNodes[i]) {
-              voxelNodes[i].style.opacity = isRevealing ? '1' : '0';
-            }
-          }
-          lastIdx = idx;
-        }
-        ticking = false;
-      }
-
-      window.addEventListener('scroll', () => {
-        if (!ticking) { requestAnimationFrame(update); ticking = true; }
-      }, { passive: true });
-      update();
-    }
-
-    initScrollChrome();
-    initReticle();
     initField();
-    initVoxel();
   </script>
 
 </BaseLayout>
