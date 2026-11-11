@@ -1,9 +1,9 @@
 {
   "name": "Lucas Bateson",
-  "dataTheme": "light",
+  "dataTheme": "dark",
   "hero": {
-    "primary": "Software for understanding systems.",
-    "secondary": "Simulation, infrastructure, and numerical methods. Two years shipping NAV’s pension frontend, now heading into Cybernetics and Robotics at NTNU.",
+    "primary": "Software developer.",
+    "secondary": "Two years at NAV IT building Norway’s public pension calculator. Trade certificate in IT development, passed with distinction. Now in the preparatory engineering year at NTNU.",
     "tertiary": "Trondheim, Norway"
   },
   "now": {
@@ -23,9 +23,28 @@
       "with": "Dervis Mansuroglu",
       "summary": "Apprenticeships as a path into software development in the public sector, from the apprentice’s side and the engineering lead’s.",
       "links": [
-        { "label": "Recording", "url": "https://vimeo.com/1006247444" },
-        { "label": "Program", "url": "https://2024.javazone.no/program/bcc32bc9-d544-4674-8a7c-3d3334c5716c" }
+        {
+          "label": "Recording",
+          "url": "https://vimeo.com/1006247444"
+        },
+        {
+          "label": "Program",
+          "url": "https://2024.javazone.no/program/bcc32bc9-d544-4674-8a7c-3d3334c5716c"
+        }
       ]
+    },
+    {
+      "title": "Delete hardcoding; import sanity",
+      "event": "NAV IT",
+      "venue": "Internal talk",
+      "summary": "A short introduction to Sanity.",
+      "links": []
+    },
+    {
+      "title": "Rust 101",
+      "event": "Frontend/backend forum",
+      "venue": "NAV IT, internal",
+      "links": []
     }
   ],
   "systems": {
@@ -34,39 +53,39 @@
         "name": "Oxidize",
         "purpose": "Real-time voxel rendering as a performance study.",
         "capabilities": [
-          "Chunked world representation with dynamic meshing.",
-          "Mesh generation pipeline optimized for real-time updates.",
-          "Performance profiling under varying world sizes."
+          "Infinite chunk streaming around a fly camera, with 32³ voxel chunks generated on worker threads.",
+          "Neighbour-aware face culling and ambient occlusion, with meshes rebuilt in parallel.",
+          "Procedural terrain with biomes, oceans and caves, drawn with frustum culling and a separate transparent pass."
         ],
-        "scope": "Experimental engine architecture",
-        "evidence": "Performance characteristics explored under load",
+        "scope": "Rust, OpenGL, GLFW",
+        "evidence": "Renderer prototype. Player physics and block editing are not built yet.",
         "url": "https://github.com/Lucas8448/oxidize"
       },
       {
-        "name": "Propagator",
-        "purpose": "Composable state propagation for physical systems.",
+        "name": "Foundry",
+        "purpose": "Self-hosted CI/CD, end to end. Archived, succeeded by kiln.",
         "capabilities": [
-          "RK4 numerical integration with adaptive stepping.",
-          "Composable force pipeline — gravity, drag, thrust.",
-          "Environment and reference frame modeling."
+          "Pipelines declared in Forgefile, a small DSL with its own lexer, parser and validator.",
+          "Webhook-driven builds from a PostgreSQL job queue, run in isolated Docker containers.",
+          "Routes domains through Cloudflare, keeps secrets in Vault, and deploys itself."
         ],
-        "scope": "Rust library designed as simulation substrate",
-        "evidence": "Modular architecture supporting downstream projects",
-        "url": "https://github.com/Lucas8448/propagator"
+        "scope": "Rust workspace, PostgreSQL, React dashboard",
+        "evidence": "Deployed itself and six services to a Mac Mini M4.",
+        "url": "https://github.com/Lucas-William-Bateson/foundry"
       }
     ],
     "foundational": [
       {
-        "name": "Foundry",
-        "purpose": "Self-hosted deployment, end to end. Archived, succeeded by kiln.",
+        "name": "Propagator",
+        "purpose": "A small rigid-body state propagation core.",
         "capabilities": [
-          "Webhook-driven builds with automatic PR verification.",
-          "Isolated container execution per workspace.",
-          "Routes domains, manages secrets, deploys itself."
+          "Rigid-body state with quaternion attitude and body/world frame transforms.",
+          "Pluggable force models and environments; gravity on a flat earth so far.",
+          "Semi-implicit Euler integrator."
         ],
-        "scope": "Rust backend with PostgreSQL and React dashboard",
-        "evidence": "Deploys itself and six services to a sovereign Mac Mini M4",
-        "url": "https://github.com/Lucas-William-Bateson/foundry"
+        "scope": "Rust library, early: gravity and semi-implicit Euler only",
+        "evidence": "Drag, thrust and higher-order integration are not implemented yet.",
+        "url": "https://github.com/Lucas8448/propagator"
       },
       {
         "name": "N-Body",
@@ -121,13 +140,20 @@
       "company": "NAV IT",
       "location": "Oslo, Norway",
       "time": "2024–2026",
-      "description": "Pension frontend in production, with strict requirements for correctness, accessibility, and long-term maintainability. Completed apprenticeship with fagprøve (trade certification)."
+      "description": "Pensjonskalkulator, Norway’s public pension calculator: React and TypeScript frontend, Kotlin services, Sanity, and CI/CD. Led the migration from Cypress to Playwright across 11 end-to-end suites, with sharding and multi-browser runs in CI. Before that, built the Kotlin backend of an internal apprentice product."
+    },
+    {
+      "role": "Support Worker (støttekontakt)",
+      "company": "Bydel Nordstrand",
+      "location": "Oslo, Norway",
+      "time": "2025–2026",
+      "description": "Part-time, alongside the apprenticeship. One-to-one support for people with special needs."
     },
     {
       "role": "Software Development Intern",
       "company": "Visma, Intility, Glasspaper",
-      "time": "2023–2024",
-      "description": "Data analysis, cloud infrastructure, and internal tooling across short-term placements."
+      "time": "2023",
+      "description": "Short placements: data analysis at Visma, cloud and OpenAI API prototypes at Intility, a Vue.js frontend at Glasspaper."
     },
     {
       "role": "Programming Instructor",
@@ -136,13 +162,43 @@
     }
   ],
   "education": [
-    { "school": "NTNU", "program": "Preparatory engineering year (forkurs)", "years": "2026–2027" },
-    { "school": "Fyrstikkalleen VGS", "program": "Information Technology and Media Production", "years": "2022–2024" }
+    {
+      "school": "NTNU",
+      "program": "Preparatory engineering year (forkurs)",
+      "years": "2026–2027"
+    },
+    {
+      "school": "NAV IT",
+      "program": "Apprenticeship in IT development",
+      "years": "2024–2026",
+      "result": "Fagprøve: bestått meget godt"
+    },
+    {
+      "school": "Fyrstikkalleen VGS",
+      "program": "Information Technology and Media Production",
+      "years": "2022–2024",
+      "result": "Subject average 5.86 · grade 6 in 12 of 14 subjects · practical exam 6"
+    }
   ],
+  "contact": {
+    "note": "Open to internships, student teams, and conversations about software in aerospace and autonomous systems."
+  },
   "links": [
-    { "label": "GitHub", "url": "https://github.com/Lucas8448" },
-    { "label": "Notes", "url": "https://notes.l3s.me" },
-    { "label": "LinkedIn", "url": "https://www.linkedin.com/in/lucas-bateson/" },
-    { "label": "Email", "url": "mailto:lucas.bateson@gmail.com" }
+    {
+      "label": "GitHub",
+      "url": "https://github.com/Lucas8448"
+    },
+    {
+      "label": "Notes",
+      "url": "https://notes.l3s.me"
+    },
+    {
+      "label": "LinkedIn",
+      "url": "https://www.linkedin.com/in/lucas-bateson/"
+    },
+    {
+      "label": "Email",
+      "url": "mailto:lucas.bateson@gmail.com"
+    }
   ]
 }

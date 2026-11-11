@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHead from '../components/SectionHead.astro';
 import cv from '../../cv.json';
 
 type System = {
@@ -27,231 +28,479 @@ type Talk = {
   event: string;
   venue: string;
   with?: string;
-  summary: string;
+  summary?: string;
   links: Link[];
+};
+
+type Work = {
+  role: string;
+  company: string;
+  location?: string;
+  time?: string;
+  description: string;
 };
 
 type Education = {
   school: string;
   program: string;
   years: string;
+  result?: string;
 };
 
 const now: Now = cv.now;
 const talks: Talk[] = cv.talks;
+const work: Work[] = cv.work;
 const education: Education[] = cv.education;
+const links: Link[] = cv.links;
+
+const nameLines = cv.name.split(' ');
+const lineOffsets = nameLines.map((_, i) => nameLines.slice(0, i).join('').length);
+const email = links.find((l) => l.url.startsWith('mailto:'))?.url.replace('mailto:', '');
+const year = new Date().getFullYear();
+const pad = (n: number) => String(n).padStart(2, '0');
 ---
 <BaseLayout title={cv.name} description={cv.hero.secondary} theme={cv.dataTheme}>
-  <main class="max-w-[580px] mx-auto px-6 pt-36 pb-24 md:pt-48 md:pb-36">
+  <div class="progress" id="progress" aria-hidden="true"></div>
+  <div class="reticle" id="reticle" aria-hidden="true"></div>
 
-    <!-- Hero -->
-    <header class="mb-40 md:mb-52">
-      <p class="mb-6 text-sm font-medium text-text">{cv.name}</p>
-      <h1 class="text-4xl font-semibold text-text tracking-tight leading-[1.05]">
-        {cv.hero.primary}
-      </h1>
-      <p class="mt-8 text-[0.9375rem] text-secondary leading-relaxed max-w-[400px]">
-        {cv.hero.secondary}
-      </p>
-      <p class="mt-3 text-sm text-muted">
-        {cv.hero.tertiary}
-      </p>
-      <nav aria-label="Links" class="mt-6 flex flex-wrap gap-x-8 gap-y-2 text-sm text-secondary">
-        {cv.links.map((l: Link) => (
-          <a
-            href={l.url}
-            target={l.url.startsWith('http') ? '_blank' : undefined}
-            rel="noreferrer noopener"
-            class="hover:text-text transition-colors duration-500"
-          >{l.label}</a>
+  <!-- Hero -->
+  <header id="hero" class="relative min-h-[100svh] flex flex-col overflow-hidden">
+    <canvas id="field" class="absolute inset-0 w-full h-full" aria-hidden="true"></canvas>
+    <div class="hero-glow" aria-hidden="true"></div>
+
+    <div class="ix-container relative z-10 flex items-center justify-between h-[72px] hero-in">
+      <p class="t-label text-secondary">{cv.hero.tertiary}</p>
+    </div>
+
+    <div id="hero-body" class="ix-container relative z-10 mt-auto pb-8 md:pb-12">
+      <h1 class="t-display-xl">
+        <span class="sr-only">{cv.name}</span>
+        {nameLines.map((line, li) => (
+          <span class="name-line" aria-hidden="true">
+            {[...line].map((ch, ci) => (
+              <span class="name-ch" style={`--i:${lineOffsets[li] + ci}`}>{ch}</span>
+            ))}
+          </span>
         ))}
-      </nav>
-    </header>
+      </h1>
 
-    <!-- Now -->
-    <section class="mb-40 md:mb-52">
-      <h2 class="text-xs uppercase tracking-[0.14em] text-muted">Now</h2>
-      <div class="mt-6 space-y-3">
-        {now.items.map((item) => (
-          <p class="text-[0.9375rem] text-secondary leading-relaxed">{item}</p>
+      <div class="mt-8 md:mt-12 hero-in" style="--i:1">
+        <p class="t-title text-text">{cv.hero.primary}</p>
+        <p class="mt-4 t-lead text-secondary max-w-[560px]">{cv.hero.secondary}</p>
+      </div>
+
+      <div class="mt-8 md:mt-12 pt-4 border-t border-border flex flex-wrap items-center justify-between gap-x-8 gap-y-3 hero-in" style="--i:2">
+        <nav aria-label="Links" class="flex flex-wrap gap-x-8 gap-y-2 t-label text-secondary">
+          {links.map((l) => (
+            <a
+              href={l.url}
+              target={l.url.startsWith('http') ? '_blank' : undefined}
+              rel="noreferrer noopener"
+              class="hover:text-ember transition-colors duration-150"
+            >{l.label}{l.url.startsWith('http') && <span class="ix-arrow ml-1" aria-hidden="true">↗</span>}</a>
+          ))}
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="ix-container pb-24 md:pb-32">
+
+    <!-- Work -->
+    <section id="work" class="pt-24 md:pt-32">
+      <SectionHead index="01" title="Work" />
+      <div class="mt-6 md:mt-8">
+        {work.map((w, i) => (
+          <div class:list={['grid md:grid-cols-12 gap-x-6 gap-y-2 py-7 md:py-9', i > 0 && 'border-t border-border']} data-reveal>
+            <p class="md:col-span-3 t-data text-muted">{w.time}</p>
+            <div class="md:col-span-9">
+              <h3 class="t-heading text-text">{w.role}</h3>
+              <p class="mt-1 t-label text-secondary">{w.company}</p>
+              <p class="mt-4 text-secondary max-w-[680px]">{w.description}</p>
+            </div>
+          </div>
         ))}
       </div>
-      <p class="mt-6 text-xs text-muted">Updated {now.updated}</p>
     </section>
 
     <!-- Talks -->
-    <section class="mb-40 md:mb-52">
-      <h2 class="text-xs uppercase tracking-[0.14em] text-muted">Talks</h2>
-      <div class="mt-6 space-y-16">
+    <section id="talks" class="pt-24 md:pt-32">
+      <SectionHead index="02" title="Talks" />
+      <div class="mt-10 md:mt-14 space-y-16">
         {talks.map((t) => (
-          <article>
-            <h3 lang={t.lang} class="text-lg font-medium text-text tracking-tight">{t.title}</h3>
-            <p class="mt-2 text-sm text-muted">
-              {t.event} · {t.venue}{t.with && ` · with ${t.with}`}
+          <article class="grid md:grid-cols-12 gap-x-6 gap-y-3" data-reveal>
+            <p class="md:col-span-3 t-data text-muted">
+              {t.event}<br />{t.venue}{t.with && <Fragment><br />with {t.with}</Fragment>}
             </p>
-            <p class="mt-4 text-[0.9375rem] text-secondary leading-relaxed">{t.summary}</p>
-            <div class="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm text-secondary">
-              {t.links.map((l) => (
-                <a
-                  href={l.url}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  class="underline underline-offset-4 decoration-rule hover:text-text transition-colors duration-500"
-                >
-                  {l.label}
-                </a>
-              ))}
+            <div class="md:col-span-9">
+              <h3 lang={t.lang} class="text-2xl md:text-3xl font-semibold text-text max-w-[760px]">{t.title}</h3>
+              {t.summary && <p class="mt-4 text-secondary max-w-[680px]">{t.summary}</p>}
+              {t.links.length > 0 && (
+                <div class="mt-5 flex flex-wrap gap-x-8 gap-y-2 t-label text-secondary">
+                  {t.links.map((l) => (
+                    <a href={l.url} target="_blank" rel="noreferrer noopener" class="ix-link">
+                      {l.label}<span class="ix-arrow ml-1" aria-hidden="true">↗</span>
+                    </a>
+                  ))}
+                </div>
+              )}
             </div>
           </article>
         ))}
       </div>
     </section>
 
-    <!-- Primary projects -->
-    <section class="mb-40 md:mb-52">
-      <h2 class="text-xs uppercase tracking-[0.14em] text-muted">Projects</h2>
-      <div class="mt-6 space-y-28">
-      {cv.systems.primary.map((s: System, i: number) => (
-        <article>
-          <div class="relative group">
-            <h3 class="text-xl font-medium text-text tracking-tight group-hover:text-secondary transition-colors duration-500">
-              <a href={s.url} target="_blank" rel="noreferrer noopener" class="after:absolute after:inset-0">
-                {s.name}<span class="text-muted" aria-hidden="true"> ↗</span>
-              </a>
-            </h3>
-            <p class="mt-2 text-[0.9375rem] text-secondary leading-relaxed">{s.purpose}</p>
-            <div class="mt-5 space-y-2">
-              {s.capabilities.map((c: string) => (
-                <p class="text-sm text-muted leading-relaxed">{c}</p>
-              ))}
-            </div>
-          </div>
-
-          {/* Oxidize — voxel rendering */}
-          {i === 0 && (
-            <div id="voxel-scroll" class="relative h-[200vh] -mx-6 md:-mx-0 mt-16">
-              <div class="sticky top-[20vh] h-[60vh] flex items-center justify-center">
-                <svg
-                  id="voxel-svg"
-                  viewBox="0 0 400 240"
-                  class="w-full max-w-[420px] h-auto"
-                  fill="none"
-                  aria-hidden="true"
-                >
+    <!-- Projects -->
+    <section id="projects" class="pt-24 md:pt-32">
+      <SectionHead index="03" title="Projects" />
+      <div class="mt-4">
+      {cv.systems.primary.map((s: System) => (
+        s.name === 'Oxidize' ? (
+          <article id="voxel-scroll" class="relative h-[160vh]">
+            <div class="sticky top-[10vh] lg:top-[14vh] grid lg:grid-cols-12 gap-x-6 gap-y-6 items-center lg:min-h-[72vh]">
+              <div class="lg:col-span-5 relative group">
+                <h3 class="t-display !text-[clamp(2rem,3.6vw,3rem)] whitespace-nowrap">
+                  <a href={s.url} target="_blank" rel="noreferrer noopener" class="after:absolute after:inset-0">
+                    {s.name}<span class="ix-arrow ml-3" aria-hidden="true">↗</span>
+                  </a>
+                </h3>
+                <p class="mt-4 t-lead text-secondary">{s.purpose}</p>
+                <ul class="mt-6">
+                  {s.capabilities.map((c: string) => (
+                    <li class="border-t border-border py-2.5 text-sm text-secondary">{c}</li>
+                  ))}
+                </ul>
+              </div>
+              <div class="lg:col-span-7 flex items-center justify-center">
+                <svg id="voxel-svg" viewBox="0 0 400 240" class="w-full max-w-[680px] h-auto" fill="none" aria-hidden="true">
                   <g id="voxel-grid"></g>
                 </svg>
               </div>
             </div>
-          )}
-
-          {/* Propagator — state propagation */}
-          {i === 1 && (
-            <div id="propagator-scroll" class="relative h-[180vh] -mx-6 md:-mx-0 mt-16">
-              <div class="sticky top-[20vh] h-[60vh] flex items-center justify-center">
-                <svg
-                  id="propagator-svg"
-                  viewBox="0 0 400 280"
-                  class="w-full max-w-[420px] h-auto"
-                  fill="none"
-                  aria-hidden="true"
-                >
-                  {/* Ground plane */}
-                  <line x1="0" y1="240" x2="400" y2="240" stroke="var(--text)" stroke-width="0.5" stroke-dasharray="2 4" opacity="0.15" />
-                  {/* Propagated trajectory */}
-                  <path id="prop-trail" d="" stroke="var(--text)" stroke-width="1.5" stroke-linecap="round" />
-                  {/* RK4 sample ticks along the path */}
-                  <g id="prop-ticks"></g>
-                  {/* Body dot */}
-                  <circle id="prop-body" r="4" fill="var(--text)" opacity="0" />
-                  {/* Velocity vector from body */}
-                  <line id="prop-velocity" stroke="var(--text)" stroke-width="0.75" stroke-linecap="round" opacity="0" />
-                </svg>
-              </div>
+          </article>
+        ) : (
+          <article class="grid lg:grid-cols-12 gap-x-6 gap-y-6 py-16 md:py-24" data-reveal>
+            <div class="lg:col-span-5 relative group">
+              <h3 class="t-display !text-[clamp(2rem,3.6vw,3rem)] whitespace-nowrap">
+                <a href={s.url} target="_blank" rel="noreferrer noopener" class="after:absolute after:inset-0">
+                  {s.name}<span class="ix-arrow ml-3" aria-hidden="true">↗</span>
+                </a>
+              </h3>
+              <p class="mt-4 t-lead text-secondary">{s.purpose}</p>
+              <p class="mt-4 t-data text-muted">{s.scope}</p>
             </div>
-          )}
-        </article>
+            <ul class="lg:col-span-7 lg:pt-2">
+              {s.capabilities.map((c: string) => (
+                <li class="border-t border-border py-4 text-secondary">{c}</li>
+              ))}
+              <li class="border-t border-border py-4 text-text">{s.evidence}</li>
+            </ul>
+          </article>
+        )
       ))}
       </div>
 
       <!-- Secondary projects + infrastructure -->
-      <div class="mt-28 space-y-8">
+      <div class="mt-16 md:mt-24 border-b border-border">
         <h3 class="sr-only">More projects</h3>
-        {cv.systems.foundational.map((s: System) => (
-          <a href={s.url} target="_blank" rel="noreferrer noopener" class="group block">
-            <span class="text-[0.9375rem] font-medium text-secondary group-hover:text-text transition-colors duration-500">{s.name}<span class="text-muted" aria-hidden="true"> ↗</span></span>
-            <span class="text-sm text-muted ml-3">{s.purpose}</span>
-          </a>
-        ))}
-        {/* TODO(Lucas): add kiln as a foundational entry in cv.json once the repo URL is known. */}
-        <p class="pt-8 text-sm text-muted leading-relaxed">
-          {cv.infrastructure.summary}
-        </p>
-      </div>
-    </section>
-
-    <!-- Work -->
-    <section class="mb-40 md:mb-52">
-      <h2 class="text-xs uppercase tracking-[0.14em] text-muted">Work</h2>
-      <div class="mt-6 space-y-10">
-        {cv.work.map((w: { role: string; company: string; location?: string; time?: string; description: string }) => (
-          <div>
-            <h3 class="text-[0.9375rem] font-medium text-text">{w.role}</h3>
-            <div class="mt-1 text-sm text-muted">
-              {w.company}{w.time && ` · ${w.time}`}
-            </div>
-            <p class="mt-2 text-sm text-secondary leading-relaxed">{w.description}</p>
+        {cv.systems.foundational.map((s: System, i: number) => (
+          <div data-reveal style={`--d:${i * 70}ms`}>
+            <a href={s.url} target="_blank" rel="noreferrer noopener" class="ix-row group">
+              <span class="ix-row__shift grid md:grid-cols-12 gap-x-6 gap-y-1 items-baseline py-5 md:py-6">
+                <span class="md:col-span-3 t-heading uppercase text-text">{s.name}</span>
+                <span class="md:col-span-5 text-secondary">{s.purpose}</span>
+                <span class="md:col-span-3 t-data text-muted">{s.scope}</span>
+                <span class="md:col-span-1 md:text-right hidden md:block"><span class="ix-arrow" aria-hidden="true">↗</span></span>
+              </span>
+            </a>
           </div>
         ))}
       </div>
+      {/* TODO(Lucas): add kiln as a foundational entry in cv.json once the repo URL is known. */}
+      <p class="mt-6 t-data text-muted" data-reveal>{cv.infrastructure.summary}</p>
     </section>
 
     <!-- Education -->
-    <section class="mb-40 md:mb-52">
-      <h2 class="text-xs uppercase tracking-[0.14em] text-muted">Education</h2>
-      <div class="mt-6 space-y-10">
-        {education.map((e) => (
-          <div>
-            <h3 class="text-[0.9375rem] font-medium text-text">{e.school}</h3>
-            <div class="text-sm text-muted mt-1">
-              {e.program} · {e.years}
+    <section id="education" class="pt-24 md:pt-32">
+      <SectionHead index="04" title="Education" />
+      <div class="mt-6 md:mt-8">
+        {education.map((e, i) => (
+          <div class:list={['grid md:grid-cols-12 gap-x-6 gap-y-2 py-7 md:py-9', i > 0 && 'border-t border-border']} data-reveal>
+            <p class="md:col-span-3 t-data text-muted">{e.years}</p>
+            <div class="md:col-span-9">
+              <h3 class="t-heading text-text">{e.school}</h3>
+              <p class="mt-1 text-secondary">{e.program}</p>
+              {e.result && <p class="mt-2 t-data text-text">{e.result}</p>}
             </div>
           </div>
         ))}
       </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
-      <nav aria-label="Footer links" class="flex flex-wrap gap-x-8 gap-y-2 text-sm text-secondary">
-        {cv.links.map((l: Link) => (
+    <!-- Now -->
+    <section id="now" class="pt-24 md:pt-32">
+      <SectionHead index="05" title="Now" meta={`Updated ${now.updated}`} />
+      <div class="grid md:grid-cols-12 gap-x-6 gap-y-10 mt-10 md:mt-14">
+        <figure class="md:col-span-3" data-reveal>
+          <img
+            src="/avatar.jpeg"
+            alt={`${cv.name}, portrait`}
+            width="784"
+            height="1000"
+            loading="lazy"
+            class="w-full max-w-[260px] aspect-[4/5] object-cover"
+          />
+        </figure>
+        <ol class="md:col-span-9">
+          {now.items.map((item, i) => (
+            <li class="grid grid-cols-[3rem_1fr] items-baseline border-t border-border py-6 md:py-8 first:border-t-0 first:pt-0" data-reveal style={`--d:${i * 90}ms`}>
+              <span class="t-data text-muted" aria-hidden="true">{pad(i + 1)}</span>
+              <p class="text-2xl md:text-3xl font-medium text-text max-w-[760px]">{item}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <footer id="contact" class="pt-24 md:pt-32">
+      <SectionHead index="06" title="Contact" />
+      {email && (
+        <p class="mt-10 md:mt-16" data-reveal>
           <a
-            href={l.url}
-            target={l.url.startsWith('http') ? '_blank' : undefined}
-            rel="noreferrer noopener"
-            class="hover:text-text transition-colors duration-500"
-          >{l.label}</a>
-        ))}
-      </nav>
+            href={`mailto:${email}`}
+            class="group inline-block font-semibold text-text hover:text-ember transition-colors duration-150 break-all text-[clamp(1.25rem,5.4vw,4.75rem)] leading-[1.05] tracking-[-0.02em]"
+          >{email}</a>
+        </p>
+      )}
+      {cv.contact?.note && (
+        <p class="mt-6 md:mt-8 t-lead text-secondary max-w-[680px]" data-reveal>{cv.contact.note}</p>
+      )}
+      <div class="mt-12 md:mt-20 pt-4 border-t border-border flex flex-wrap items-baseline justify-between gap-x-8 gap-y-3" data-reveal>
+        <nav aria-label="Footer links" class="flex flex-wrap gap-x-8 gap-y-2 t-label text-secondary">
+          {links.map((l) => (
+            <a
+              href={l.url}
+              target={l.url.startsWith('http') ? '_blank' : undefined}
+              rel="noreferrer noopener"
+              class="hover:text-ember transition-colors duration-150"
+            >{l.label}{l.url.startsWith('http') && <span class="ix-arrow ml-1" aria-hidden="true">↗</span>}</a>
+          ))}
+        </nav>
+        <p class="t-data text-muted">{cv.name} · {cv.hero.tertiary} · {year}</p>
+      </div>
     </footer>
   </main>
 
   <script>
-    // Fade-in observer
-    const observer = new IntersectionObserver(
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // ---- Scroll reveals ----
+    const revealObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            observer.unobserve(entry.target);
+            entry.target.classList.add('in');
+            revealObserver.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
+      { threshold: 0, rootMargin: '0px 0px -8% 0px' }
     );
-    document.querySelectorAll('main > *').forEach((el) => {
-      el.classList.add('fade-section');
-      observer.observe(el);
-    });
+    document.querySelectorAll('[data-reveal]').forEach((el) => revealObserver.observe(el));
+
+    // ---- Scroll progress hairline and hero drift ----
+    function initScrollChrome() {
+      const bar = document.getElementById('progress');
+      const heroBody = document.getElementById('hero-body');
+      if (!bar || reduced) return;
+      let ticking = false;
+      function update() {
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        bar!.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`;
+        if (heroBody) {
+          const p = Math.min(1, window.scrollY / window.innerHeight);
+          heroBody.style.transform = `translateY(${(p * 80).toFixed(1)}px)`;
+          heroBody.style.opacity = `${Math.max(0, 1 - p * 1.4).toFixed(3)}`;
+        }
+        ticking = false;
+      }
+      window.addEventListener('scroll', () => {
+        if (!ticking) { requestAnimationFrame(update); ticking = true; }
+      }, { passive: true });
+      update();
+    }
+
+    // ---- Cursor reticle (mouse only) ----
+    function initReticle() {
+      const el = document.getElementById('reticle');
+      if (!el || reduced || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+      let tx = 0, ty = 0, x = 0, y = 0, running = false;
+      function frame() {
+        x += (tx - x) * 0.2;
+        y += (ty - y) * 0.2;
+        el!.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px)`;
+        if (Math.abs(tx - x) + Math.abs(ty - y) > 0.2) requestAnimationFrame(frame);
+        else running = false;
+      }
+      window.addEventListener('mousemove', (e) => {
+        tx = e.clientX; ty = e.clientY;
+        if (!el.classList.contains('on')) { x = tx; y = ty; el.classList.add('on'); }
+        el.classList.toggle('hot', !!(e.target as Element).closest?.('a, button'));
+        if (!running) { running = true; requestAnimationFrame(frame); }
+      }, { passive: true });
+      document.documentElement.addEventListener('mouseleave', () => el.classList.remove('on'));
+    }
+
+    // ---- Hero: three equal masses on the figure-eight orbit (Chenciner & Montgomery), G = m = 1 ----
+    function initField() {
+      const canvas = document.getElementById('field') as HTMLCanvasElement | null;
+      const hero = document.getElementById('hero');
+      const ctx = canvas?.getContext('2d');
+      if (!canvas || !hero || !ctx) return;
+
+      const css = getComputedStyle(document.documentElement);
+      const EMBER = css.getPropertyValue('--ember').trim() || '#ff6b2c';
+      const INK = css.getPropertyValue('--text').trim() || '#f4eee3';
+
+      const DT = 0.001;
+      const PERIOD = 6.32591398;
+      const SIM_RATE = PERIOD / 21; // one full orbit every 21 s of wall time
+      const TRAIL = 420;
+
+      const px = [0.97000436, -0.97000436, 0];
+      const py = [-0.24308753, 0.24308753, 0];
+      const vx = [0.466203685, 0.466203685, -0.93240737];
+      const vy = [0.43236573, 0.43236573, -0.86473146];
+      const ax = [0, 0, 0];
+      const ay = [0, 0, 0];
+
+      function accel() {
+        ax.fill(0); ay.fill(0);
+        for (let i = 0; i < 3; i++) {
+          for (let j = i + 1; j < 3; j++) {
+            const dx = px[j] - px[i], dy = py[j] - py[i];
+            const r2 = dx * dx + dy * dy;
+            const inv = 1 / (r2 * Math.sqrt(r2));
+            ax[i] += dx * inv; ay[i] += dy * inv;
+            ax[j] -= dx * inv; ay[j] -= dy * inv;
+          }
+        }
+      }
+      function step() {
+        for (let i = 0; i < 3; i++) {
+          vx[i] += ax[i] * DT * 0.5; vy[i] += ay[i] * DT * 0.5;
+          px[i] += vx[i] * DT; py[i] += vy[i] * DT;
+        }
+        accel();
+        for (let i = 0; i < 3; i++) {
+          vx[i] += ax[i] * DT * 0.5; vy[i] += ay[i] * DT * 0.5;
+        }
+      }
+      accel();
+
+      const trails: number[][] = [[], [], []];
+      let w = 0, h = 0, dpr = 1, cx = 0, cy = 0, scale = 1;
+      let mx = 0, my = 0, ox = 0, oy = 0; // pointer offset, eased
+
+      function resize() {
+        const rect = canvas!.getBoundingClientRect();
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        w = rect.width; h = rect.height;
+        canvas!.width = Math.round(w * dpr);
+        canvas!.height = Math.round(h * dpr);
+        cx = w * 0.5;
+        cy = h * 0.3;
+        scale = Math.min(w * 0.4, h * 0.7);
+      }
+
+      function draw() {
+        ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
+        ctx!.clearRect(0, 0, w, h);
+        ctx!.lineWidth = 1.25;
+        ctx!.lineCap = 'round';
+        ctx!.strokeStyle = EMBER;
+        const BANDS = 14;
+        for (let b = 0; b < 3; b++) {
+          const t = trails[b];
+          const n = t.length / 2;
+          for (let k = 0; k < BANDS; k++) {
+            const from = Math.floor((k / BANDS) * n);
+            const to = Math.min(n - 1, Math.floor(((k + 1) / BANDS) * n));
+            if (to <= from) continue;
+            ctx!.globalAlpha = 0.04 + 0.8 * Math.pow((k + 1) / BANDS, 2);
+            ctx!.beginPath();
+            ctx!.moveTo(cx + ox + t[from * 2] * scale, cy + oy + t[from * 2 + 1] * scale);
+            for (let i = from + 1; i <= to; i++) {
+              ctx!.lineTo(cx + ox + t[i * 2] * scale, cy + oy + t[i * 2 + 1] * scale);
+            }
+            ctx!.stroke();
+          }
+        }
+        ctx!.globalAlpha = 1;
+        ctx!.fillStyle = INK;
+        for (let b = 0; b < 3; b++) {
+          ctx!.beginPath();
+          ctx!.arc(cx + ox + px[b] * scale, cy + oy - py[b] * scale, 3.5, 0, Math.PI * 2);
+          ctx!.fill();
+        }
+      }
+
+      function record() {
+        for (let b = 0; b < 3; b++) {
+          trails[b].push(px[b], -py[b]);
+          if (trails[b].length > TRAIL * 2) trails[b].splice(0, 2);
+        }
+      }
+
+      resize();
+      new ResizeObserver(() => { resize(); draw(); }).observe(canvas);
+
+      if (reduced) {
+        // Static figure: one full period drawn once, nothing moves.
+        const steps = Math.round(PERIOD / DT);
+        for (let s = 0; s < steps; s++) {
+          step();
+          if (s % 15 === 0) record();
+        }
+        draw();
+        return;
+      }
+
+      let visible = true;
+      let last = performance.now();
+      let raf = 0;
+
+      function frame(nowMs: number) {
+        raf = 0;
+        if (!visible || document.hidden) return;
+        const elapsed = Math.min(0.05, (nowMs - last) / 1000);
+        last = nowMs;
+        const steps = Math.max(1, Math.round((elapsed * SIM_RATE) / DT));
+        for (let s = 0; s < steps; s++) step();
+        record();
+        ox += (mx - ox) * 0.05;
+        oy += (my - oy) * 0.05;
+        draw();
+        raf = requestAnimationFrame(frame);
+      }
+      function start() {
+        if (raf) return;
+        last = performance.now();
+        raf = requestAnimationFrame(frame);
+      }
+
+      new IntersectionObserver((entries) => {
+        visible = entries[0].isIntersecting;
+        if (visible) start();
+      }).observe(hero);
+      document.addEventListener('visibilitychange', () => { if (!document.hidden) start(); });
+      hero.addEventListener('mousemove', (e) => {
+        mx = (e.clientX / w - 0.5) * -36;
+        my = (e.clientY / h - 0.5) * -24;
+      }, { passive: true });
+      start();
+    }
 
     // ---- Oxidize: voxel chunk meshing and generation ----
     function initVoxel() {
@@ -346,110 +595,10 @@ const education: Education[] = cv.education;
       update();
     }
 
-    // ---- Propagator: bouncing projectile under gravity and drag ----
-    function initPropagator() {
-      const section = document.getElementById('propagator-scroll');
-      const bodyEl = document.getElementById('prop-body');
-      const trailEl = document.getElementById('prop-trail');
-      const ticksG = document.getElementById('prop-ticks');
-      const velEl = document.getElementById('prop-velocity');
-      if (!section || !bodyEl || !trailEl || !ticksG || !velEl) return;
-
-      // Simulate a projectile with gravity, drag, and floor collision
-      const g = 280;
-      const dragK = 0.001;
-      const restitution = 0.65; // bounce energy retention
-      const friction = 0.85; 
-      const dt = 0.015;
-      const points: { x: number; y: number; vx: number; vy: number }[] = [];
-
-      const radius = 4;
-      const groundY = 240 - radius;
-      let x = 20, y = 140, vx = 160, vy = -200;
-
-      for (let t = 0; t < 1200; t++) {
-        points.push({ x, y, vx, vy });
-        
-        const speed = Math.sqrt(vx * vx + vy * vy);
-        const ax = -dragK * speed * vx;
-        const ay = g - dragK * speed * vy;
-        
-        vx += ax * dt;
-        vy += ay * dt;
-        x += vx * dt;
-        y += vy * dt;
-        
-        // Ground bounce condition
-        if (y >= groundY) {
-          y = groundY;
-          vy = -vy * restitution;
-          vx = vx * friction;
-          if (Math.abs(vy) < 15) vy = 0; // come to rest cleanly
-        }
-        
-        if (x > 390 && vx > 0) break;
-        if (vx < 1 && Math.abs(vy) === 0 && y === groundY) break;
-      }
-
-      const total = points.length;
-
-      // RK4/Simulation sample ticks at intervals
-      const tickPositions: number[] = [];
-      for (let i = 0; i < total; i += 12) {
-        tickPositions.push(i);
-      }
-
-      let ticking = false;
-
-      function update() {
-        const rect = section!.getBoundingClientRect();
-        const scrollable = rect.height - window.innerHeight;
-        const progress = Math.max(0, Math.min(1, -rect.top / scrollable));
-
-        const idx = Math.min(total - 1, Math.floor(progress * total));
-        const cur = points[idx];
-
-        let d = '';
-        const step = 2;
-        for (let i = 0; i <= idx; i += step) {
-          d += `${i === 0 ? 'M' : 'L'}${points[i].x.toFixed(1)} ${points[i].y.toFixed(1)}`;
-        }
-        d += `L${cur.x.toFixed(1)} ${cur.y.toFixed(1)}`;
-
-        trailEl!.setAttribute('d', d);
-
-        bodyEl!.setAttribute('cx', `${cur.x}`);
-        bodyEl!.setAttribute('cy', `${cur.y}`);
-        bodyEl!.style.opacity = progress > 0.005 ? '1' : '0';
-
-        // Velocity vector shows inertia & sharp changes on bounce
-        const vScale = 0.12;
-        velEl!.setAttribute('x1', `${cur.x}`);
-        velEl!.setAttribute('y1', `${cur.y}`);
-        velEl!.setAttribute('x2', `${cur.x + cur.vx * vScale}`);
-        velEl!.setAttribute('y2', `${cur.y + cur.vy * vScale}`);
-        velEl!.style.opacity = progress > 0.005 && progress < 0.99 ? '0.3' : '0';
-
-        // Render integration ticks up to current propagation point
-        let ticksHTML = '';
-        for (const ti of tickPositions) {
-          if (ti > idx) break;
-          const p = points[ti];
-          ticksHTML += `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="1.5" fill="var(--text)" opacity="0.1"/>`;
-        }
-        ticksG!.innerHTML = ticksHTML;
-
-        ticking = false;
-      }
-
-      window.addEventListener('scroll', () => {
-        if (!ticking) { requestAnimationFrame(update); ticking = true; }
-      }, { passive: true });
-      update();
-    }
-
+    initScrollChrome();
+    initReticle();
+    initField();
     initVoxel();
-    initPropagator();
   </script>
 
 </BaseLayout>
