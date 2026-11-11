@@ -1,12 +1,17 @@
+/* Warm Interstage: the Interstage structure (square, hairlines, wide caps)
+   on a warm ground with bone ink and a single ember accent. Dark only. */
 :root,
-[data-theme='light'] {
-  --bg: #fafafa;
-  --panel: #ffffff;
-  --border: #e8e8ed;
-  --text: #1d1d1f;
-  --secondary: #515154;
-  --muted: #6e6e73;
-  --rule: #c7c7cc;
-  --primary: #1d1d1f;
-  --accent: #424245;
+[data-theme='dark'] {
+  --bg: #0b0907;
+  --panel: #14110d;
+  --border: #2b2620;
+  --rule: #7d7468;
+  --text: #f4eee3;
+  --secondary: #b9af9f;
+  --muted: #91887a;
+  --primary: #f4eee3;
+  --accent: #ff6b2c;
+  --ember: #ff6b2c;
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  color-scheme: dark;
 }

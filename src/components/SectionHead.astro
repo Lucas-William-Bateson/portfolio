@@ -1,0 +1,12 @@
+---
+const { index, title, meta } = Astro.props as { index: string; title: string; meta?: string };
+---
+<div>
+  <div class="h-px bg-rule" data-reveal="rule"></div>
+  <div class="flex items-baseline justify-between gap-6 pt-4" data-reveal>
+    <h2 class="t-title">
+      <span class="t-data text-ember mr-4 align-middle normal-case" aria-hidden="true">{index}</span>{title}
+    </h2>
+    {meta && <p class="t-data text-muted text-right">{meta}</p>}
+  </div>
+</div>

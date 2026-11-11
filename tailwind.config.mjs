@@ -12,9 +12,11 @@ export default {
         rule: 'var(--rule)',
         primary: 'var(--primary)',
         accent: 'var(--accent)',
+        ember: 'var(--ember)',
       },
       fontFamily: {
-        sans: ['Inter', 'SF Pro Display', '-apple-system', 'system-ui', 'sans-serif'],
+        sans: ['Archivo', 'Helvetica Neue', 'Arial', 'sans-serif'],
+        mono: ['B612 Mono', 'ui-monospace', 'SF Mono', 'Menlo', 'monospace'],
       },
       fontSize: {
         xs: ['0.8125rem', { lineHeight: '1.5' }],
